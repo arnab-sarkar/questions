@@ -14,7 +14,7 @@ class MainPage(webapp2.RequestHandler):
         # [START if_user]
         if user:
             self.response.headers['Content-Type'] = 'text/plain'
-            self.response.write('Hello, ' + user.nickname())
+            self.response.write('Hello there, ' + user.nickname())
         # [END if_user]
         # [START if_not_user]
         else:
