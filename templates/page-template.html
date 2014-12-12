@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Question</title>
+	<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+	<div id="header">
+		<div class="wrapper row">
+			<div class="col"><h2 id="logo">Home</h2></div>
+			<ul id="navlist" class="col-right">             
+				<li><a id="addQuestBtn" href="#">Add Question</a></li>
+				{% if user %}
+					<li><a href="#" class="small-strong">{{ user.nickname }}</a></li>
+					<!--li><a href="#">Profile</a></li-->
+					<li><a href="{{ userLogout }}">Logout</a></li>
+				{% else %}
+					<li><a href="{{ userLogin }}">Login</a></li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
