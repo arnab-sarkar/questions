@@ -1,6 +1,9 @@
 import webapp2
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
+from model.model import Post
+from model.model import Tags
+import time
 import os
 
 def template_path(template):
@@ -31,9 +34,18 @@ class AddQuestion(webapp2.RequestHandler):
         question = self.request.get("question")
         tags = self.request.get("tags")
         tags_array = filter(None,tags.split(","))
-        post = Post()
+        post = Post()        
         post.userId = users.get_current_user()
         post.title = question
         post.tags = tags_array
-        post.put()
+        question_post_id = post.put()
+        for t in tags_array:
+            tag = Tags.query(Tags.name==t).fetch()
+            if (len(tag) == 0):
+                tag = Tags()
+                tag.name = t
+                tag.posts = [question_post_id]
+            else:
+                tag[0].posts.append(question_post_id)
+                tag[0].put()        
         self.redirect('/')

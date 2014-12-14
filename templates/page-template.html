@@ -8,7 +8,7 @@
 <body>
 	<div id="header">
 		<div class="wrapper row">
-			<div class="col"><h2 id="logo">Home</h2></div>
+			<div class="col"><a href="/"><h2 id="logo">Home</h2></a></div>
 			<ul id="navlist" class="col-right">             
 				<li><a id="addQuestBtn" href="#" onclick="addQuestion('{{ userLogin }}')">Add Question</a></li>
 				{% if user %}
@@ -33,6 +33,24 @@
 		</div>	
 	</div>
 
+	<div class="questionWrapper content">
+		<div id="displayQuestion">
+			<ul class="question_display">
+				{% for q in question %}
+					<div class="display_question">
+						<ul class="each_tag row">
+							{% for tag in q.tags %}
+								<li class="each_tag_display">{{ tag }} </li>
+							{% endfor %}
+						</ul>
+						<div class="each_question">{{ q.title }} </div>
+						<hr/>
+					</div>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
 	<div id="addTags" style="display:none">
 		<div class="overlay">
 			<div class="modal">
@@ -46,7 +64,7 @@
 				<textarea style="height:100px;width:390px" id="tags" name="tags" onfocus="this.value=''">Enter comma seperated list of tags</textarea><br/><br/>
 				<input type="button" value="Add Tags" onclick="addTag()" />
 				<input type="button" value="Back" onclick="goBack()" />
-				<input type="button" value="Add Question" onclick="" />				
+				<input type="button" value="Add Question" onclick="postQuestion()" />				
 			</div>
 		</div>	
 	</div>
