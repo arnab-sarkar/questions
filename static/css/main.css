@@ -23,6 +23,8 @@ body {
   line-height: 1.25;
   font-weight: bold;
   padding: 15px 0 0 0;
+  color: #000;
+  text-decoration: none;  
 }
 
 .display_userId {
@@ -55,12 +57,17 @@ body {
   font-size: 13px;
   font-weight: 500;
   color: #808393;
-  background-color: #f4f4fa;
+  background-color: #eee;
   margin-right: 4px;
   margin-bottom: 4px;
   border-radius: 12px;
   padding: 4px 8px;
   border: 0;
+}
+
+.each_tag_display:hover {
+  color: #333;
+  background-color: #bbb;
 }
 
 #header {
@@ -213,13 +220,18 @@ hr.style-three {
   border-bottom: 1px solid #e2e2e2;
 }
 
+.display_answer {
+  padding: 16px 0;
+  border-bottom: 1px solid #e2e2e2;
+  position: relative;
+}
+
 .question_link {
   color: #000;
   text-decoration: none;  
 }
 
-.question_link:hover {
-  color: #000;
+.question_link:hover {  
   text-decoration: underline;
 }
 

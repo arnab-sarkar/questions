@@ -7,6 +7,7 @@ class Post(ndb.Model):
 	title = ndb.StringProperty()
 	body = ndb.TextProperty()
 	tags = ndb.StringProperty( repeated = True )
+	parentId = ndb.KeyProperty()
 
 class Vote(ndb.Model):
 	userId = ndb.UserProperty()

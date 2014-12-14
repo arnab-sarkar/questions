@@ -1,6 +1,7 @@
 {% extends "page-template.html" %}
 
 {% block content %}
+
 	<div id='tag_div' class="display_tags content">
 		<h4 class="grid_page">
 			QUESTION TOPICS			
@@ -19,9 +20,20 @@
 			<div class="display_userId_question"> - {{ question.userId }}</div>
 		{% endif %}
 		<hr/>
-		<ul class="question_display">
-			
-		</ul>
+
+		<!--ul class="question_display"-->
+			{% for a in answers %}
+				<div class="display_answer">{{ a.body }}
+				{% if user %}
+					<br/><div class="display_userId_question"> - {{ a.userId }}</div>
+				{% endif %}
+				</div>
+			{% endfor %}
+		<!--/ul-->
+		{% if user %}			
+			<textarea style="width:100%;height:100px;margin-top:15px" id="answer" name="answer"></textarea><br/><br/>
+			<input type="button" value="Answer" onclick='postAnswer("{{ question.key.id }}")' />			
+		{% endif %}
 	</div>
 		
 {% endblock %}

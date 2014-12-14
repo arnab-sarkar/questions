@@ -23,7 +23,7 @@ class MainPage(webapp2.RequestHandler):
             template_values['userLogin'] = users.create_login_url('/')
         path = template_path('home.html')
         time.sleep(0.1)
-        question = Post.query(ancestor=None).fetch()
+        question = Post.query(Post.parentId==None).fetch()
         template_values['question'] = question
         self.response.out.write(template.render(path, template_values))
 
@@ -56,6 +56,7 @@ class AddQuestion(webapp2.RequestHandler):
         post.userId = users.get_current_user()
         post.title = question
         post.tags = tags_array
+        post.parentId = None
         question_post_id = post.put()
         for t in tags_array:
             tag = Tags.query(Tags.name==t).fetch()
@@ -74,8 +75,10 @@ class ViewQuestion(webapp2.RequestHandler):
         qId = self.request.get("q")
         user = users.get_current_user()
         question = Post.get_by_id(int(qId))
+        answers = Post.query(Post.parentId==question.key).fetch()
         template_values = {
-            'question': question
+            'question': question,
+            'answers': answers
         }
         if user:
             template_values['user'] = user
@@ -84,3 +87,16 @@ class ViewQuestion(webapp2.RequestHandler):
             template_values['userLogin'] = users.create_login_url('/')
         path = template_path('question.html')        
         self.response.out.write(template.render(path, template_values))
+
+class AddAnswer(webapp2.RequestHandler):
+    def post(self):
+        answer = self.request.get("a")        
+        qId = self.request.get("q")
+        question = Post.get_by_id(int(qId))
+        post = Post()        
+        post.userId = users.get_current_user()
+        post.body = answer        
+        post.parentId = question.key
+        post.put()
+        time.sleep(0.1)
+        self.redirect('/viewQuestion?q='+qId)
