@@ -10,16 +10,47 @@
 		<div class="wrapper row">
 			<div class="col"><h2 id="logo">Home</h2></div>
 			<ul id="navlist" class="col-right">             
-				<li><a id="addQuestBtn" href="#">Add Question</a></li>
+				<li><a id="addQuestBtn" href="#" onclick="addQuestion('{{ userLogin }}')">Add Question</a></li>
 				{% if user %}
 					<li><a href="#" class="small-strong">{{ user.nickname }}</a></li>
 					<!--li><a href="#">Profile</a></li-->
-					<li><a href="{{ userLogout }}">Logout</a></li>
+					<li><a href="{{ userLogout }}" onclick="return logoutConfirmation()">Logout</a></li>
 				{% else %}
 					<li><a href="{{ userLogin }}">Login</a></li>
 				{% endif %}
 			</ul>
-		</div>
+		</div>		
+	</div>	
+
+	<div id="addQuestion" style="display:none">
+		<div class="overlay">
+			<div class="modal">
+				<a href="#" onclick="closeAddQuestion()"><img src="/img/close.jpg" align="right"></a>
+				<h2>Add Question</h2>
+				<textarea style="height:100px;width:390px" id="question" name="question"></textarea><br/><br/>
+				<input type="button" value="Next" onclick="addTags()" />		
+			</div>
+		</div>	
 	</div>
+
+	<div id="addTags" style="display:none">
+		<div class="overlay">
+			<div class="modal">
+				<a href="#" onclick="closeAddTags()"><img src="/img/close.jpg" align="right"></a>
+				<h2>Add Tags</h2>
+				<div id="question_entered"></div>
+				<hr/>
+				<ul class = "tags_display">
+					<div id="tags_entered"></div>
+				</ul>
+				<textarea style="height:100px;width:390px" id="tags" name="tags" onfocus="this.value=''">Enter comma seperated list of tags</textarea><br/><br/>
+				<input type="button" value="Add Tags" onclick="addTag()" />
+				<input type="button" value="Back" onclick="goBack()" />
+				<input type="button" value="Add Question" onclick="" />				
+			</div>
+		</div>	
+	</div>
+
+	<script type="text/javascript" src="/js/main.js"></script>
 </body>
 </html>

@@ -1,64 +1,61 @@
-(function(){
+function logoutConfirmation() {    
+	return confirm("You will be logged out of all Google accounts!");
+}
 
+function addQuestion(loginUrl) {
+	if (loginUrl) {
+		window.location.assign(loginUrl);		
+	} else {
+		document.getElementById('addQuestion').style.display = 'block';
+	}
+}
 
-    var ModalView = Backbone.View.extend({
+function closeAddQuestion() {
+	document.getElementById('addQuestion').style.display = 'none';
+}
 
-        initialize: function() {
-            this.overlay = this.el.find('.overlay');
-            this.content = this.el.find('.modal');
-        }
-    });
+function closeAddTags() {
+	document.getElementById('addTags').style.display = 'none';
+}
 
-    ModalView.extend = function(child) {
-        var view = Backbone.View.extend.apply(this, arguments);
-        view.prototype.events = _.extend({}, this.prototype.events, child.events);
-        return view;
-    };
+function addTags () {
+	var q = document.getElementById('question').value;
+	document.getElementById('addQuestion').style.display = 'none';
+	document.getElementById('addTags').style.display = 'block';
+	document.getElementById('question_entered').innerHTML = q;	
+}
 
-    var addQuestionModal = new (ModalView.extend({
-        id: 'addQuestionModal',
+function goBack() {
+	console.log("here");
+	document.getElementById('addTags').style.display = 'none';
+	document.getElementById('addQuestion').style.display = 'block';
+}
 
-        events: {
-            'click .ico-close': 'close'
-        },
+function removeTag(tag) {
+	tag.parentNode.removeChild(tag);
+}
 
-        initialize: function() {
-            console.log(this.$el);
-            this.questionTextarea = this.$el.find('textarea');
-        },
-
-        render: function() {
-            $(this.questionTextarea).expanding();
-        },
-
-        close: function() {
-            this.$el.hide();
-        }
-
-    }))();
-
-    var $addOverlay = $("#addQuestionOverlay"),
-        $addQuestionModal = $("#addQuestionModal"),
-        $addQuestionText = $("addQuestionText"),
-        $addQuestionTags = $("addQuestionTags"),
-        $addQuestBtn = $("#addQuestBtn");
-
-    $addQuestBtn.on("click", function(e) {
-        //$addOverlay.show();
-        //$addQuestionModal.show();
-        //$addQuestionModal.find('textarea').expanding();
-        console.log(addQuestionModal.$el);
-        addQuestionModal.$el.css('display', 'block');
-    });
-
-/*    $('.ico-close').on('click', function(e) {
-        $(this).parent().hide();
-        $(this).parent().parent().hide();
-    });
-
-    $addQuestionText.find('.btn').on('click', function(){
-        $addQuestionText.hide();
-        $addQuestionTags.show();
-    });*/
-
-})();
+function addTag() {		
+	var prev_tag = document.getElementById('tags_entered').innerHTML;	
+	prev_tag = prev_tag.split("</li>");
+	var uniqueTags = {};
+	for (i = 0; i < prev_tag.length; i++) {
+		var temp = prev_tag[i].replace(/<a.*<\/a>/g, "");
+		temp = temp.replace(/<li.*>/g, "");				
+		uniqueTags[temp] = true;		
+	}
+ 	var tag = document.getElementById('tags').value.split(",");
+ 	var tags = ""
+ 	for (i = 0; i < tag.length; i++) {
+ 		var singleWord = tag[i].split(" ");
+ 		for (j = 0; j < singleWord.length; j++) {
+	 		if (singleWord[j] != "" && !uniqueTags[singleWord[j]]) {
+	 			tags += "<li class='close' id='tag_"+singleWord[j]+"'>" + singleWord[j] + "<a href='#' class='close_img' onclick='removeTag(tag_"+singleWord[j]+")'/></a></li>";
+	 			//tags += "<li id="+tag[i]+">" + tag[i] + "<div class='remove_tag'><img src='/img/close.jpg' onclick='removeTag("+tag[i]+")'/></div></li>";
+	 			uniqueTags[singleWord[j]] = true;
+	 		} 
+ 		}
+ 	}
+	document.getElementById('tags_entered').innerHTML += tags;
+	document.getElementById('tags').value = "";
+}
