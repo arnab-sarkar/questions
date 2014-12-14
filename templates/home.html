@@ -12,7 +12,10 @@
 							{% endfor %}
 						</ul>
 						<div class="each_question">{{ q.title }}
-						<span class="display_userId"> - {{ q.userId }}</span> </div>
+						{% if user %}
+							<span class="display_userId"> - {{ q.userId }}</span>
+						{% endif %}
+						</div>
 						<hr class="style-three"/>
 					</div>
 				{% endfor %}
