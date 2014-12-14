@@ -23,9 +23,26 @@ class MainPage(webapp2.RequestHandler):
         else:
             template_values['userLogin'] = users.create_login_url('/')
         path = template_path('home.html')
-        time.sleep(1)
+        time.sleep(0.1)
         question = Post.query(ancestor=None).fetch()
         template_values['question'] = question
+        self.response.out.write(template.render(path, template_values))
+
+class DisplaySameTagQuestion(webapp2.RequestHandler):
+    def post(self):
+        tag = self.request.get("tag")
+        tag_object = Tags.query(Tags.name==tag).fetch()
+        questionList=[]
+        for postId in tag_object[0].posts:
+            questionList.append(postId.get())
+        template_values = {
+            'title': 'Questions'
+        }
+        template_values['user'] = users.get_current_user()
+        template_values['userLogout'] = users.create_logout_url('/')
+        template_values['userLogin'] = users.create_login_url('/')
+        template_values['question']=questionList
+        path = template_path('home.html')
         self.response.out.write(template.render(path, template_values))
 
 class AddQuestion(webapp2.RequestHandler):
@@ -45,6 +62,7 @@ class AddQuestion(webapp2.RequestHandler):
                 tag = Tags()
                 tag.name = t
                 tag.posts = [question_post_id]
+                tag.put()
             else:
                 tag[0].posts.append(question_post_id)
                 tag[0].put()        

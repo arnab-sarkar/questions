@@ -58,9 +58,9 @@ function addTag() {
  	var tag = document.getElementById('tags').value.split(",");
  	var tags = ""
  	for (i = 0; i < tag.length; i++) {
- 		var singleWord = tag[i].replace(/ +/g,"_"); 		
+ 		var singleWord = tag[i].trim().replace(/ +/g,"_"); 		
  		if (singleWord != "" && !uniqueTags[singleWord]) {
- 			tags += "<li class='close' id='tag_"+singleWord+"'>" + tag[i] + "<a href='#' class='close_img' onclick='removeTag(tag_"+singleWord+")'/></a></li>";
+ 			tags += "<li class='close' id='tag_"+singleWord+"'>" + tag[i].trim() + "<a href='#' class='close_img' onclick='removeTag(tag_"+singleWord+")'/></a></li>";
  			//tags += "<li id="+tag[i]+">" + tag[i] + "<div class='remove_tag'><img src='/img/close.jpg' onclick='removeTag("+tag[i]+")'/></div></li>";
  			uniqueTags[singleWord] = true;
  		}  		
@@ -90,6 +90,10 @@ function post(path, params, method) {
     }
     document.body.appendChild(form);
     form.submit();
+}
+
+function searchTag(tag) {
+	post('/tag',{tag:tag});
 }
 
 function postQuestion(){

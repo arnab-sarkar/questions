@@ -60,8 +60,19 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
-#logo {
-  background-color: #243EED;
+hr.style-three {
+    border: 0;
+    border-bottom: 1px dashed #ccc;
+    background: #999;
+}
+
+.light-text {
+  color:#aaa;
+  font-size: 12px;
+}
+
+#logo {  
+  background-color: #243EED;  
   color: #fff;
   padding: 10px 20px;
   font-weight: bold;

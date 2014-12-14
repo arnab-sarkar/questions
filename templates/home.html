@@ -1,2 +1,22 @@
 {% extends "page-template.html" %}
 
+{% block content %}
+	<div class="questionWrapper content">
+		<div id="displayQuestion">
+			<ul class="question_display">
+				{% for q in question %}
+					<div class="display_question">
+						<ul class="each_tag row">
+							{% for tag in q.tags %}
+								<li class="each_tag_display"><a style="text-decoration:none" onclick='searchTag("{{ tag }}")'>{{ tag }}</a></li>
+							{% endfor %}
+						</ul>
+						<div class="each_question">{{ q.title }} </div>
+						<div class="light-text"> - {{ q.userId }}</div>
+						<hr class="style-three"/>
+					</div>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endblock %}

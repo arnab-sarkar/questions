@@ -22,6 +22,10 @@
 		</div>		
 	</div>	
 
+	<div class="wrapper">
+		{% block content %}{% endblock %}
+	</div>
+
 	<div id="addQuestion" style="display:none">
 		<div class="overlay">
 			<div class="modal">
@@ -31,24 +35,6 @@
 				<input type="button" value="Next" onclick="addTags()" />		
 			</div>
 		</div>	
-	</div>
-
-	<div class="questionWrapper content">
-		<div id="displayQuestion">
-			<ul class="question_display">
-				{% for q in question %}
-					<div class="display_question">
-						<ul class="each_tag row">
-							{% for tag in q.tags %}
-								<li class="each_tag_display">{{ tag }} </li>
-							{% endfor %}
-						</ul>
-						<div class="each_question">{{ q.title }} </div>
-						<hr/>
-					</div>
-				{% endfor %}
-			</ul>
-		</div>
 	</div>
 
 	<div id="addTags" style="display:none">
