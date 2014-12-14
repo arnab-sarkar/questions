@@ -82,12 +82,18 @@ hr.style-three {
 }
 
 #logo {  
+  background-image: url(/img/icon_home.png);
+  background-size: 24px 24px;
+  background-position: 10px;
+  background-repeat: no-repeat;
   background-color: #243EED;  
   color: #fff;
   padding: 10px 20px;
   font-weight: bold;
   display: inline-block;
   margin: 0;
+  padding-left: 40px;
+  padding-top: 12px;
 }
 
 #logo:hover {
