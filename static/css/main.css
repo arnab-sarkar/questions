@@ -24,6 +24,16 @@ body {
   font-weight: bold;
 }
 
+.display_userId {
+  color:#aaa;
+  font-size: 12px;
+  display: none;
+}
+
+.each_question:hover .display_userId {
+  display: inline-block;
+}
+
 .each_tag {
   padding:0;
   list-style-type: none;

@@ -11,8 +11,8 @@
 								<li class="each_tag_display"><a style="text-decoration:none" onclick='searchTag("{{ tag }}")'>{{ tag }}</a></li>
 							{% endfor %}
 						</ul>
-						<div class="each_question">{{ q.title }} </div>
-						<div class="light-text"> - {{ q.userId }}</div>
+						<div class="each_question">{{ q.title }}
+						<span class="display_userId"> - {{ q.userId }}</span> </div>
 						<hr class="style-three"/>
 					</div>
 				{% endfor %}
