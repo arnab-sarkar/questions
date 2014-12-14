@@ -11,7 +11,6 @@ def template_path(template):
     return path
 
 class MainPage(webapp2.RequestHandler):
-
     def get(self):
         user = users.get_current_user()
         template_values = {
@@ -31,6 +30,7 @@ class MainPage(webapp2.RequestHandler):
 class DisplaySameTagQuestion(webapp2.RequestHandler):
     def post(self):
         tag = self.request.get("tag")
+        user = users.get_current_user()
         tag_object = Tags.query(Tags.name==tag).fetch()
         questionList=[]
         for postId in tag_object[0].posts:
@@ -38,15 +38,16 @@ class DisplaySameTagQuestion(webapp2.RequestHandler):
         template_values = {
             'title': 'Questions'
         }
-        template_values['user'] = users.get_current_user()
-        template_values['userLogout'] = users.create_logout_url('/')
-        template_values['userLogin'] = users.create_login_url('/')
+        if user:
+            template_values['user'] = user
+            template_values['userLogout'] = users.create_logout_url('/')
+        else:
+            template_values['userLogin'] = users.create_login_url('/')
         template_values['question']=questionList
         path = template_path('home.html')
         self.response.out.write(template.render(path, template_values))
 
 class AddQuestion(webapp2.RequestHandler):
-
     def post(self):
         question = self.request.get("question")
         tags = self.request.get("tags")
@@ -67,3 +68,19 @@ class AddQuestion(webapp2.RequestHandler):
                 tag[0].posts.append(question_post_id)
                 tag[0].put()        
         self.redirect('/')
+
+class ViewQuestion(webapp2.RequestHandler):
+    def get(self):
+        qId = self.request.get("q")
+        user = users.get_current_user()
+        question = Post.get_by_id(int(qId))
+        template_values = {
+            'question': question
+        }
+        if user:
+            template_values['user'] = user
+            template_values['userLogout'] = users.create_logout_url('/')
+        else:
+            template_values['userLogin'] = users.create_login_url('/')
+        path = template_path('question.html')        
+        self.response.out.write(template.render(path, template_values))

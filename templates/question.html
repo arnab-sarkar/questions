@@ -1,0 +1,27 @@
+{% extends "page-template.html" %}
+
+{% block content %}
+	<div id='tag_div' class="display_tags content">
+		<h4 class="grid_page">
+			QUESTION TOPICS			
+		</h4>		
+		<ul class="each_tag row">
+			{% for tag in question.tags %}
+				<li class="each_tag_display"><a style="text-decoration:none" onclick='searchTag("{{ tag }}")'>{{ tag }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div id="displayQuestion" class="questionWrapper content">						
+		<h3>
+			{{ question.title }}					
+		</h3>
+		{% if user %}
+			<div class="display_userId_question"> - {{ question.userId }}</div>
+		{% endif %}
+		<hr/>
+		<ul class="question_display">
+			
+		</ul>
+	</div>
+		
+{% endblock %}

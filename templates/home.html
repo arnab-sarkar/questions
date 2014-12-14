@@ -11,7 +11,7 @@
 								<li class="each_tag_display"><a style="text-decoration:none" onclick='searchTag("{{ tag }}")'>{{ tag }}</a></li>
 							{% endfor %}
 						</ul>
-						<div class="each_question">{{ q.title }}
+						<div class="each_question"> <a class="question_link" href="/viewQuestion?q={{q.key.id}}">{{ q.title }}</a>
 						{% if user %}
 							<span class="display_userId"> - {{ q.userId }}</span>
 						{% endif %}
