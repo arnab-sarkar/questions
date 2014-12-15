@@ -24,7 +24,7 @@ class MainPage(webapp2.RequestHandler):
             template_values['userLogin'] = users.create_login_url('/')
         path = template_path('home.html')
         time.sleep(0.1)
-        question = Post.query(Post.parentId==None).fetch()
+        question = Post.query(Post.parentId==None).order(-Post.modifiedDate).fetch()
         template_values['question'] = question
         self.response.out.write(template.render(path, template_values))
 
@@ -109,7 +109,7 @@ class ViewQuestion(webapp2.RequestHandler):
         qId = self.request.get("q")
         user = users.get_current_user()
         question = Post.get_by_id(int(qId))
-        answers = Post.query(Post.parentId==question.key).fetch()
+        answers = Post.query(Post.parentId==question.key).order(-Post.voteCount).fetch()        
         template_values = {
             'question': question,
             'answers': answers
@@ -133,7 +133,8 @@ class AddAnswer(webapp2.RequestHandler):
         post.parentId = question.key
         post.voteCount = 0
         post.put()
-        time.sleep(0.1)
+        question.put()
+        time.sleep(0.2)
         self.redirect('/viewQuestion?q='+qId)
 
 class VotePost(webapp2.RequestHandler):
@@ -154,6 +155,9 @@ class VotePost(webapp2.RequestHandler):
             else:
                 post.voteCount = post.voteCount - 1
             post.put()
+            if post.parentId != None:
+                question_db = Post.get_by_id(post.parentId.id())
+                question_db.put()
             v.put()
         else:
             if existing_vote[0].vote != bool(vote):
@@ -163,8 +167,11 @@ class VotePost(webapp2.RequestHandler):
                 else:
                     post.voteCount = post.voteCount - 2
                 post.put()
+                if post.parentId != None:
+                    question_db = Post.get_by_id(post.parentId.id())
+                    question_db.put()
                 existing_vote[0].put()        
-        time.sleep(0.1)
+        time.sleep(0.2)
         self.redirect(str(url))
 
 class UpdateAnswer(webapp2.RequestHandler):
@@ -175,5 +182,8 @@ class UpdateAnswer(webapp2.RequestHandler):
         answer_post = Post.get_by_id(int(aId))
         answer_post.body = answer;
         answer_post.put()
-        time.sleep(0.1)
+        if answer_post.parentId != None:
+            question_db = Post.get_by_id(answer_post.parentId.id())
+            question_db.put()
+        time.sleep(0.2)
         self.redirect(str(url))
