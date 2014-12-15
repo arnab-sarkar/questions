@@ -3,6 +3,7 @@ from google.appengine.api import users
 from google.appengine.ext.webapp import template
 from model.model import Post
 from model.model import Tags
+from model.model import Vote
 import time
 import os
 
@@ -57,6 +58,7 @@ class AddQuestion(webapp2.RequestHandler):
         post.title = question
         post.tags = tags_array
         post.parentId = None
+        post.voteCount = 0
         question_post_id = post.put()
         for t in tags_array:
             tag = Tags.query(Tags.name==t).fetch()
@@ -97,6 +99,38 @@ class AddAnswer(webapp2.RequestHandler):
         post.userId = users.get_current_user()
         post.body = answer        
         post.parentId = question.key
+        post.voteCount = 0
         post.put()
         time.sleep(0.1)
         self.redirect('/viewQuestion?q='+qId)
+
+class VotePost(webapp2.RequestHandler):
+    def post(self):
+        postId = self.request.get("id")
+        vote = self.request.get("vote")
+        url = self.request.get("url")
+        user = users.get_current_user()
+        post = Post.get_by_id(int(postId))
+        existing_vote = Vote.query(Vote.userId==user,Vote.postId==post.key).fetch()
+        if (len(existing_vote) == 0):
+            v = Vote()
+            v.userId = user
+            v.postId = post.key
+            v.vote = bool(vote)
+            if (bool(vote)):
+                post.voteCount = post.voteCount + 1
+            else:
+                post.voteCount = post.voteCount - 1
+            post.put()
+            v.put()
+        else:
+            if existing_vote[0].vote != bool(vote):
+                existing_vote[0].vote = bool(vote)
+                if (bool(vote)):
+                    post.voteCount = post.voteCount + 2
+                else:
+                    post.voteCount = post.voteCount - 2
+                post.put()
+                existing_vote[0].put()        
+        time.sleep(0.1)
+        self.redirect(str(url))

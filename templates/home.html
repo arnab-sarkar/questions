@@ -20,14 +20,14 @@
 						<br/>
 
 						<div class="actionBar">
-							<div class="upVote" onclick='voteUp("{{ q.key.id }}")'>
+							<div class="upVote" onclick='vote("{{ q.key.id }}", "{{ userLogin }}", "up")'>
 								Upvote
 								<span class="count">
-									0
+									{{ q.voteCount }}
 								</span>
 							</div>
 							<div class="downVote">
-								<a href="#" onclick='voteDown("{{ q.key.id }}")'>
+								<a href="#" onclick='vote("{{ q.key.id }}", "{{ userLogin }}", "")'>
 								Downvote
 								</a>
 							</div>			

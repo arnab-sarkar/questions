@@ -93,17 +93,22 @@ function post(path, params, method) {
 }
 
 function postAnswer(qId) {
-	var answer = document.getElementById('answer').value;	
+	var answer = document.getElementById('answer').value;
 	post('/addAnswer',{a:answer,q:qId});
 }
 
-function voteUp(qId) {
-	//alert(qId);
-	alert(document.URL);
-}
-
-function voteDown(qId) {
-	alert(qId);
+function vote(id, loginUrl, vote) {
+	if (loginUrl) {
+		window.location.assign(loginUrl);		
+	} else {
+		var url = document.URL;
+		var data={
+			id:id,
+			vote:vote,
+			url:url
+		}
+		post('/vote',data);
+	}
 }
 
 function postQuestion(){
