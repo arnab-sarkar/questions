@@ -30,17 +30,19 @@ body {
 .display_userId {
   color:#aaa;
   font-size: 12px;
-  display: none;
+  display: inline-block;
+  opacity: 0;
 }
 
 .display_userId_question {
   color:#aaa;
-  font-size: 12px;  
+  font-size: 12px;
   display: inline-block;
+  padding-top: 5px;
 }
 
 .each_question:hover .display_userId {
-  display: inline-block;
+  opacity: 1;
 }
 
 .each_tag {
@@ -222,7 +224,7 @@ hr.style-three {
 
 .display_answer {
   padding: 16px 0;
-  border-bottom: 1px solid #e2e2e2;
+  border-top: 1px solid #e2e2e2;
   position: relative;
 }
 
@@ -237,6 +239,95 @@ hr.style-three {
 
 .question_link:visited {
   color: #000;
+}
+
+.upVote {
+  float: left;
+  margin-right: 9px;
+  font-size: 13px;
+  margin: 0 0 -16px 0;
+  bottom: 0;
+  clear: left;
+  position: relative;
+  border-radius: 2px;
+  display: inline-block;
+  font-weight: 500;
+  outline: 0;
+  padding: 3px 7px 4px 7px;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: none;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 1px 0 rgba(200,200,200,0.2);
+  border-radius: 3px;
+  background: #f1f8fb;
+  color: #2b6dad;
+  border: 1px solid #bbcadc;
+  transition: all ease-out 100ms;
+  margin-right: 5px;
+}
+
+.count {
+  border-radius: 3px;
+  font-weight: bold;
+  min-width: 10px;
+  padding: 2px 3px;
+  margin: 0 0 0 4px;
+  text-align: center;
+  display: inline-block;
+  float: none;
+  background: 0;
+  color: #2b6dad;
+  padding: 0;
+  margin: 0;
+  margin-left: 6px;
+  padding-left: 6px;
+  transition: all ease-out 100ms;
+  position: relative;
+}
+
+.count:before {
+  width: 1px;
+  height: 14.5px;
+  content: "";
+  position: absolute;
+  left: 0;
+  background: #a9ccee;
+  top: 1px;
+}
+
+.downVote a{
+  margin: 0;
+  font-size: 13px;
+  padding: 5px 0 0 0;
+  background: 0;
+  color: #999;
+  font-weight: normal;
+  display: inline-block;
+  border: 0;
+  margin-left: 15px;
+  text-decoration: none;
+
+}
+
+.downVote:before {
+  margin-left: 10px
+}
+
+.actionBar {
+  padding: 0 8px 0 8px;
+}
+
+.answer_count {
+  font-size: 11px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: bold;
+  padding-bottom: 8px;
+  /*margin-bottom: 16px;
+  border-bottom: 1px solid #e2e2e2;*/
 }
 
 .col {

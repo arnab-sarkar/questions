@@ -11,22 +11,53 @@
 				<li class="each_tag_display"><a style="text-decoration:none" onclick='searchTag("{{ tag }}")'>{{ tag }}</a></li>
 			{% endfor %}
 		</ul>
-	</div>
+	</div>	
 	<div id="displayQuestion" class="questionWrapper content">						
-		<h3>
+		<div class="each_question">
 			{{ question.title }}					
-		</h3>
+		</div>
 		{% if user %}
 			<div class="display_userId_question"> - {{ question.userId }}</div>
 		{% endif %}
+		<div class="actionBar">
+			<div class="upVote" onclick='voteUp("{{ question.key.id }}")'>
+				Upvote
+				<span class="count">
+					0
+				</span>
+			</div>
+			<div class="downVote">
+				<a href="#" onclick='voteDown("{{ question.key.id }}")'>
+				Downvote
+				</a>
+			</div>			
+			<br/>
+		</div>
 		<hr/>
 
 		<!--ul class="question_display"-->
+		<div class="answer_count">
+			{{ answers|length }} ANSWERS
+		</div>
 			{% for a in answers %}
 				<div class="display_answer">{{ a.body }}
 				{% if user %}
-					<br/><div class="display_userId_question"> - {{ a.userId }}</div>
+					<div class="display_userId_question"> - {{ a.userId }}</div>
 				{% endif %}
+				</div>
+				<div class="actionBar">
+					<div class="upVote" onclick='voteUp("{{ a.key.id }}")'>
+						Upvote
+						<span class="count">
+							0
+						</span>
+					</div>
+					<div class="downVote">
+						<a href="#" onclick='voteDown("{{ a.key.id }}")'>
+						Downvote
+						</a>
+					</div>			
+					<br/>
 				</div>
 			{% endfor %}
 		<!--/ul-->

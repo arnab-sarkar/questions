@@ -1,6 +1,7 @@
 {% extends "page-template.html" %}
 
-{% block content %}
+{% block content %}	
+
 	<div class="questionWrapper content">
 		<div id="displayQuestion">
 			<ul class="question_display">
@@ -10,12 +11,29 @@
 							{% for tag in q.tags %}
 								<li class="each_tag_display"><a style="text-decoration:none" onclick='searchTag("{{ tag }}")'>{{ tag }}</a></li>
 							{% endfor %}
-						</ul>
-						<div class="each_question"> <a class="question_link" href="/viewQuestion?q={{q.key.id}}">{{ q.title }}</a>
+						</ul>						
+						<div class="each_question"><a class="question_link" href="/viewQuestion?q={{q.key.id}}">{{ q.title }}</a>						
 						{% if user %}
 							<span class="display_userId"> - {{ q.userId }}</span>
 						{% endif %}
 						</div>
+						<br/>
+
+						<div class="actionBar">
+							<div class="upVote" onclick='voteUp("{{ q.key.id }}")'>
+								Upvote
+								<span class="count">
+									0
+								</span>
+							</div>
+							<div class="downVote">
+								<a href="#" onclick='voteDown("{{ q.key.id }}")'>
+								Downvote
+								</a>
+							</div>			
+							<br/>
+						</div>
+
 						<hr class="style-three"/>
 					</div>
 				{% endfor %}

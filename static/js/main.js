@@ -101,6 +101,14 @@ function postAnswer(qId) {
 	post('/addAnswer',{a:answer,q:qId});
 }
 
+function voteUp(qId) {
+	alert(qId);
+}
+
+function voteDown(qId) {
+	alert(qId);
+}
+
 function postQuestion(){
 	var tags = document.getElementById('tags_entered').innerHTML.split("</li>");
 	tagList="";
