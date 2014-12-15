@@ -1,3 +1,6 @@
+var originalTag;
+var originalId;
+
 function logoutConfirmation() {    
 	return confirm("You will be logged out of all Google accounts!");
 }
@@ -118,7 +121,7 @@ function vote(id, loginUrl, vote) {
 		window.location.assign(loginUrl);		
 	} else {
 		var url = document.URL;
-		var data={
+		var data = {
 			id:id,
 			vote:vote,
 			url:url
@@ -154,8 +157,27 @@ function updateQuestion(){
 		post('/updateQuestion',{qId:qId, question:question_title, tags:tagList});	
 }
 
-function editAnswer(aId) {
-	var answer = document.getElementById(aId).innerHTML.trim();
-	
-	alert(answer);
+function editAnswer(aId) {	
+	if (originalId !== undefined) {
+		document.getElementById(originalId).innerHTML = originalTag;
+	}
+	originalTag = document.getElementById(aId).innerHTML;
+	originalId = aId;
+	var answer = originalTag.replace(/<span class="display_userId".*>/g, "").trim();
+	document.getElementById(aId).innerHTML = "<textarea id='edit_this_answer' class='donot_display_edit' style='height:100px;width:100%'>"+
+											answer+"</textarea><div> <input type='button' value='Update Answer' onclick='postEditAnswer("+aId+")' />"+
+											"<input id='cancel_btn' type='button' value='Cancel' /></div>";
+	document.getElementById('cancel_btn').onclick=function(){document.getElementById(aId).innerHTML = originalTag;};
+	document.getElementById('edit_this_answer').focus();		
+}
+
+function postEditAnswer(aId) {
+	var answer = document.getElementById('edit_this_answer').value;
+	var url = document.URL;
+	var data = {
+			aId:aId,
+			answer:answer,
+			url:url
+		} 
+	post('/updateAnswer',data);
 }

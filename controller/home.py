@@ -166,3 +166,14 @@ class VotePost(webapp2.RequestHandler):
                 existing_vote[0].put()        
         time.sleep(0.1)
         self.redirect(str(url))
+
+class UpdateAnswer(webapp2.RequestHandler):
+    def post(self):
+        aId = self.request.get('aId')
+        url = self.request.get("url")
+        answer = self.request.get('answer').strip()
+        answer_post = Post.get_by_id(int(aId))
+        answer_post.body = answer;
+        answer_post.put()
+        time.sleep(0.1)
+        self.redirect(str(url))

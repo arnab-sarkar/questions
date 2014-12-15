@@ -46,17 +46,17 @@
 		</div>
 			{% for a in answers %}
 				<div class="display_answer">				
-				<div class="answer_edit" >
-					<div id='{{ a.key.id }}'>
-						{{ a.body }}					
-					</div>			
-					{% if a.userId == user %}
-						<div class="display_userId"><a style="text-decoration:none;" href="#" onclick="editAnswer('{{ a.key.id }}')"> - Edit </a></div>
-					{% endif %}	
-					{% if user %}
-						<div class="display_userId_question"> - {{ a.userId }}</div>
-					{% endif %}
+					<div class="answer_edit" >
+						<div id='{{ a.key.id }}'>
+							{{ a.body }}											
+							{% if a.userId == user %}
+								<span class="display_userId"><a style="text-decoration:none;" href="#" onclick="editAnswer('{{ a.key.id }}')"> - Edit </a></span>
+							{% endif %}	
+						</div>
 					</div>
+					{% if user %}
+						<span class="display_userId_question"> - {{ a.userId }}</span>
+					{% endif %}	
 				</div>
 				<div class="actionBar">
 					<div class="upVote" onclick='vote("{{ a.key.id }}", "{{ userLogin }}", "up")'>
