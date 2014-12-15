@@ -14,11 +14,6 @@ indexes:
   properties:
   - name: parentId
   - name: modifiedDate
-
-- kind: Post
-  properties:
-  - name: parentId
-  - name: modifiedDate
     direction: desc
 
 - kind: Post
