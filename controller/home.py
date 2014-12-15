@@ -28,7 +28,7 @@ class MainPage(webapp2.RequestHandler):
         self.response.out.write(template.render(path, template_values))
 
 class DisplaySameTagQuestion(webapp2.RequestHandler):
-    def post(self):
+    def get(self):
         tag = self.request.get("tag")
         user = users.get_current_user()
         tag_object = Tags.query(Tags.name==tag).fetch()

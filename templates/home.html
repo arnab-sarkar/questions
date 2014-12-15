@@ -9,7 +9,7 @@
 					<div class="display_question">
 						<ul class="each_tag row">
 							{% for tag in q.tags %}
-								<li class="each_tag_display"><a style="text-decoration:none" onclick='searchTag("{{ tag }}")'>{{ tag }}</a></li>
+								<li class="each_tag_display"><a style="text-decoration:none" href='/tag?tag={{ tag }}'>{{ tag }}</a></li>
 							{% endfor %}
 						</ul>						
 						<div class="each_question"><a class="question_link" href="/viewQuestion?q={{q.key.id}}">{{ q.title }}</a>						

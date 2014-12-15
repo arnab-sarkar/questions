@@ -67,9 +67,16 @@ body {
   border: 0;
 }
 
+.each_tag_display, a:visited, a:link {
+  color: #808393;
+}
+
 .each_tag_display:hover {
-  color: #333;
   background-color: #bbb;
+}
+
+.each_tag_display:hover a {
+  color: #111;
 }
 
 #header {

@@ -92,17 +92,14 @@ function post(path, params, method) {
     form.submit();
 }
 
-function searchTag(tag) {
-	post('/tag',{tag:tag});
-}
-
 function postAnswer(qId) {
 	var answer = document.getElementById('answer').value;	
 	post('/addAnswer',{a:answer,q:qId});
 }
 
 function voteUp(qId) {
-	alert(qId);
+	//alert(qId);
+	alert(document.URL);
 }
 
 function voteDown(qId) {
