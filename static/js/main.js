@@ -7,6 +7,8 @@ function addQuestion(loginUrl) {
 		window.location.assign(loginUrl);		
 	} else {
 		document.getElementById('addQuestion').style.display = 'block';
+		document.getElementById('add_question_button').value = "Add Question";
+		document.getElementById('add_question_button').onclick = postQuestion;
 	}
 }
 
@@ -24,11 +26,10 @@ function addTags () {
 	var q = document.getElementById('question').value;
 	document.getElementById('addQuestion').style.display = 'none';
 	document.getElementById('addTags').style.display = 'block';
-	document.getElementById('question_entered').innerHTML = q;	
+	document.getElementById('question_entered').innerHTML = q;
 }
 
-function goBack() {
-	console.log("here");
+function goBack() {	
 	document.getElementById('addTags').style.display = 'none';
 	document.getElementById('addQuestion').style.display = 'block';
 }
@@ -58,7 +59,8 @@ function addTag() {
  	var tag = document.getElementById('tags').value.split(",");
  	var tags = ""
  	for (i = 0; i < tag.length; i++) {
- 		var singleWord = tag[i].trim().replace(/ +/g,"_"); 		
+ 		var singleWord = tag[i].trim().replace(/ +/g, "_"); 
+ 		singleWord = singleWord.replace(/[.'?+-@#!^%~*()|\\\/]/g,"");		
  		if (singleWord != "" && !uniqueTags[singleWord]) {
  			tags += "<li class='close' id='tag_"+singleWord+"'>" + tag[i].trim() + "<a href='#' class='close_img' onclick='removeTag(tag_"+singleWord+")'/></a></li>";
  			//tags += "<li id="+tag[i]+">" + tag[i] + "<div class='remove_tag'><img src='/img/close.jpg' onclick='removeTag("+tag[i]+")'/></div></li>";
@@ -97,6 +99,20 @@ function postAnswer(qId) {
 	post('/addAnswer',{a:answer,q:qId});
 }
 
+function editQuestion(loginUrl) {
+	var question = document.getElementById('question_to_edit').innerHTML;
+	document.getElementById('question').value = question;
+	var tags = document.getElementById('all_existing_tags').innerHTML;
+	tags = tags.trim();
+	tags = tags.replace(/<\/a.*>/g, ",");
+	tags = tags.replace(/<li.*>/g, "");
+	document.getElementById('tags').value = tags;
+	document.getElementById('add_question_button').value = "Update Question";
+	document.getElementById('add_question_button').onclick = updateQuestion;
+	addTag();
+	document.getElementById('addQuestion').style.display = 'block';
+}
+
 function vote(id, loginUrl, vote) {
 	if (loginUrl) {
 		window.location.assign(loginUrl);		
@@ -111,7 +127,7 @@ function vote(id, loginUrl, vote) {
 	}
 }
 
-function postQuestion(){
+function postQuestion(){	
 	var tags = document.getElementById('tags_entered').innerHTML.split("</li>");
 	tagList="";
 	for(i=0;i<tags.length;i++) {
@@ -122,4 +138,18 @@ function postQuestion(){
 		alert("Question title cannot be left blank")
 	else
 		post('/question',{question:question_title,tags:tagList});	
+}
+
+function updateQuestion(){	
+	var tags = document.getElementById('tags_entered').innerHTML.split("</li>");
+	tagList="";
+	for(i=0;i<tags.length;i++) {
+		tagList+= tags[i].replace(/<a.*>/g,"").replace(/<li.*>/g,"") + ",";
+	}
+	var question_title = document.getElementById('question_entered').innerHTML;
+	var qId = document.getElementById('qId').innerHTML.trim();	
+	if(question_title.match(/^[ \t]*$/))
+		alert("Question title cannot be left blank");
+	else
+		post('/updateQuestion',{qId:qId, question:question_title, tags:tagList});	
 }

@@ -29,14 +29,14 @@ body {
 
 .display_userId {
   color:#aaa;
-  font-size: 12px;
+  font-size: 13px;
   display: inline-block;
   opacity: 0;
 }
 
 .display_userId_question {
   color:#aaa;
-  font-size: 12px;
+  font-size: 13px;
   display: inline-block;
   padding-top: 5px;
 }
@@ -83,7 +83,7 @@ body {
   position: fixed;
   top:0;
   width:100%;
-  background: #fff;  
+  background: #fff; 
 }
 
 .content {
@@ -255,7 +255,7 @@ hr.style-three {
   margin: 0 0 -16px 0;
   bottom: 0;
   clear: left;
-  position: relative;
+  /*position: relative;*/
   border-radius: 2px;
   display: inline-block;
   font-weight: 500;
@@ -291,7 +291,7 @@ hr.style-three {
   margin-left: 6px;
   padding-left: 6px;
   transition: all ease-out 100ms;
-  position: relative;
+  /*position: relative;*/
 }
 
 .count:before {
@@ -333,8 +333,10 @@ hr.style-three {
   letter-spacing: .5px;
   font-weight: bold;
   padding-bottom: 8px;
-  /*margin-bottom: 16px;
-  border-bottom: 1px solid #e2e2e2;*/
+}
+
+.display_userId:hover {
+  text-decoration: underline;
 }
 
 .col {

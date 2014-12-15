@@ -6,15 +6,19 @@
 		<h4 class="grid_page">
 			QUESTION TOPICS			
 		</h4>		
-		<ul class="each_tag row">
+		<ul class="each_tag row" id="all_existing_tags">
 			{% for tag in question.tags %}
 				<li class="each_tag_display"><a style="text-decoration:none" href='/tag?tag={{ tag }}'>{{ tag }}</a></li>
 			{% endfor %}
 		</ul>
-	</div>	
+	</div>
 	<div id="displayQuestion" class="questionWrapper content">						
 		<div class="each_question">
-			{{ question.title }}					
+			<div id="question_to_edit">{{ question.title }}</div>
+			<div id="qId" style="display:none">{{ question.key.id }}</div>
+			{% if question.userId == user %}
+				<span class="display_userId"><a style="text-decoration:none;" href="#" onclick="editQuestion('{{ userLogin }}')"> - Edit </a></span>
+			{% endif %}
 		</div>
 		{% if user %}
 			<div class="display_userId_question"> - {{ question.userId }}</div>
@@ -64,7 +68,7 @@
 		<!--/ul-->
 		{% if user %}			
 			<textarea style="width:100%;height:100px;margin-top:15px" id="answer" name="answer"></textarea><br/><br/>
-			<input type="button" value="Answer" onclick='postAnswer("{{ question.key.id }}")' />			
+			<input type="button" value="Answer" onclick='postAnswer("{{ question.key.id }}")' />
 		{% endif %}
 	</div>
 		

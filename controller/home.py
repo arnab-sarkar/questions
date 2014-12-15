@@ -69,8 +69,40 @@ class AddQuestion(webapp2.RequestHandler):
                 tag.put()
             else:
                 tag[0].posts.append(question_post_id)
-                tag[0].put()        
-        self.redirect('/')
+                tag[0].put()
+        self.redirect('/viewQuestion?q='+str(question_post_id.id()))
+
+class UpdateQuestion(webapp2.RequestHandler):
+    def post(self):
+        qId = self.request.get("qId")
+        question_title = self.request.get("question");
+        tags = self.request.get("tags")
+        tags_array = filter(None,tags.split(","))
+        question_db = Post.get_by_id(int(qId))
+        question_db.title = question_title
+        old_tags = question_db.tags
+        question_db.tags = tags_array
+        question_post_id = question_db.put()
+        for t in tags_array:
+            tag = Tags.query(Tags.name==t).fetch()
+            if (len(tag) == 0):
+                tag = Tags()
+                tag.name = t
+                tag.posts = [question_post_id]
+                tag.put()
+            else:
+                tag[0].posts.append(question_post_id)
+                tag[0].put()
+        for old_t in old_tags:
+            old_t = old_t.strip()            
+            ot = Tags.query(Tags.name==old_t).fetch()
+            ot[0].posts.remove(question_post_id)
+            if len(ot[0].posts) == 0:
+                ot[0].key.delete()
+            else:
+                ot[0].put()
+        time.sleep(0.1)
+        self.redirect('/viewQuestion?q='+qId)
 
 class ViewQuestion(webapp2.RequestHandler):
     def get(self):
