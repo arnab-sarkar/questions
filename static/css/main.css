@@ -154,8 +154,7 @@ hr.style-three {
   padding-top: 12px;
 }
 
-#logo:hover {
-  cursor: pointer;
+#logo:hover {  
   background-color: #1C33C9;
 }
 
@@ -383,6 +382,36 @@ hr.style-three {
   background: #fff; 
   z-index: 98;
   padding-top: 0;
+}
+
+.btn {
+  background: #243EED;
+  background-image: -webkit-linear-gradient(top, #243EED, #4960f5);
+  background-image: -moz-linear-gradient(top, #243EED, #4960f5);
+  background-image: -ms-linear-gradient(top, #243EED, #4960f5);
+  background-image: -o-linear-gradient(top, #243EED, #4960f5);
+  background-image: linear-gradient(to bottom, #243EED, #4960f5);
+  -webkit-border-radius: 3;
+  -moz-border-radius: 3;
+  border-radius: 3px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 10px;
+  padding: 5px 10px 5px 10px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  border-width: 0;
+}
+
+.btn:hover {
+  background: #1C33C9;
+  cursor: pointer;
+  background-image: -webkit-linear-gradient(top, #1C33C9, #0e25b8);
+  background-image: -moz-linear-gradient(top, #1C33C9, #0e25b8);
+  background-image: -ms-linear-gradient(top, #1C33C9, #0e25b8);
+  background-image: -o-linear-gradient(top, #1C33C9, #0e25b8);
+  background-image: linear-gradient(to bottom, #1C33C9, #0e25b8);
+  text-decoration: none;
 }
 
 .col {

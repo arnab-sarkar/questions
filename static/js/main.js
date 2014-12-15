@@ -11,6 +11,8 @@ function addQuestion(loginUrl) {
 	} else {
 		document.getElementById('addQuestion').style.display = 'block';
 		document.getElementById('add_question_button').value = "Add Question";
+		document.getElementById('operation_title_q').innerHTML = "Add";
+		document.getElementById('operation_title_t').innerHTML = "Add";
 		document.getElementById('add_question_button').onclick = postQuestion;
 	}
 }
@@ -110,6 +112,8 @@ function editQuestion(loginUrl) {
 	tags = tags.replace(/<\/a.*>/g, ",");
 	tags = tags.replace(/<li.*>/g, "");
 	document.getElementById('tags').value = tags;
+	document.getElementById('operation_title_q').innerHTML = "Edit";
+	document.getElementById('operation_title_t').innerHTML = "Edit";
 	document.getElementById('add_question_button').value = "Update Question";
 	document.getElementById('add_question_button').onclick = updateQuestion;
 	addTag();
@@ -165,8 +169,8 @@ function editAnswer(aId) {
 	originalId = aId;
 	var answer = originalTag.replace(/<span class="display_userId".*>/g, "").trim();
 	document.getElementById(aId).innerHTML = "<textarea id='edit_this_answer' class='donot_display_edit' style='height:100px;width:100%'>"+
-											answer+"</textarea><div> <input type='button' value='Update Answer' onclick='postEditAnswer("+aId+")' />"+
-											"<input id='cancel_btn' type='button' value='Cancel' /></div>";
+											answer+"</textarea><div> <input class='btn' type='button' value='Update Answer' onclick='postEditAnswer("+aId+")' />"+
+											"<input id='cancel_btn' class='btn' type='button' value='Cancel' /></div>";
 	document.getElementById('cancel_btn').onclick=function(){document.getElementById(aId).innerHTML = originalTag;};
 	document.getElementById('edit_this_answer').focus();		
 }
