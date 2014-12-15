@@ -153,3 +153,9 @@ function updateQuestion(){
 	else
 		post('/updateQuestion',{qId:qId, question:question_title, tags:tagList});	
 }
+
+function editAnswer(aId) {
+	var answer = document.getElementById(aId).innerHTML.trim();
+	
+	alert(answer);
+}
