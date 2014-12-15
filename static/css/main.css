@@ -12,6 +12,12 @@ body {
   margin:0 auto;
 }
 
+.questionWrapper_viewPage {
+  width: 800px;
+  margin:0 auto;
+  margin-left: 170px;
+}
+
 .question_display {
     list-style-type: none;
 }
@@ -82,6 +88,28 @@ body {
 
 .each_tag_display:hover a {
   color: #111;
+}
+
+.date_info_display {
+  letter-spacing: -0.5px; 
+  float:left;
+  line-height: 1.2em;
+  font-size: 13px;
+  font-weight: 500;
+  color: #808393;  
+  margin-right: 4px;
+  margin-bottom: 4px;  
+  padding: 4px 8px 0 0;
+}
+
+.date_info_display:after {
+  content: '';
+  width: 0;  
+  line-height: 6px;
+  border-right: 1px solid #999;
+  position: relative;
+  top: 1px;
+  left: 5px;
 }
 
 #header {
@@ -173,20 +201,24 @@ hr.style-three {
 }
 
 .tags_display li {
+  letter-spacing: -0.5px;
+  line-height: 1.25;
   float:left;
-  line-height:28px;
-  font-size:11px;
-  margin-right:10px;
-  margin-bottom: 5px;
-  padding:0 18px 0 10px;  
-  background:#0089e0;
-  color:#fff;
-  text-decoration:none;
-  border-radius: 4px;
+  line-height: 1.2em;
+  font-size: 13px;
+  font-weight: 500;
+  color: #808393;
+  background-color: #eee;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  border-radius: 12px;
+  padding: 4px 8px;
+  border: 0;
 }
 
 .tags_display li:hover {
-  background:#555;
+  color: #000;
+  background:#bbb;
 }
 
 .close_img {
@@ -194,8 +226,8 @@ hr.style-three {
   width:12px;
   height:12px;
   position: relative;
-  top: 3px;
-  left: 10px;
+  top: 2px;
+  left: 5px;
   background-size: 12px 12px;
   display: inline-block;
   opacity: 0;
@@ -343,6 +375,14 @@ hr.style-three {
 
 .display_userId:hover {
   text-decoration: underline;
+}
+
+.display_tags { 
+  position: fixed;
+  top: 102px;
+  background: #fff; 
+  z-index: 98;
+  padding-top: 0;
 }
 
 .col {

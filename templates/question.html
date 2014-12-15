@@ -11,9 +11,13 @@
 				<li class="each_tag_display"><a style="text-decoration:none" href='/tag?tag={{ tag }}'>{{ tag }}</a></li>
 			{% endfor %}
 		</ul>
-	</div>
-	<div id="displayQuestion" class="questionWrapper content">						
+	</div>	
+	<div id="displayQuestion" class="questionWrapper_viewPage content">
 		<div class="each_question">
+			<ul class="each_tag row">
+				<li class="date_info_display">Created on: {{ question.createdDate }}</li>
+				<li class="date_info_display">Last Activity: {{ question.modifiedDate }}</li>
+			</ul>
 			<div id="question_to_edit">{{ question.title }}</div>
 			<div id="qId" style="display:none">{{ question.key.id }}</div>
 			{% if question.userId == user %}
@@ -45,7 +49,11 @@
 			{{ answers|length }} ANSWERS
 		</div>
 			{% for a in answers %}
-				<div class="display_answer">				
+				<div class="display_answer">
+					<ul class="each_tag row">
+						<li class="date_info_display">Created on: {{ a.createdDate }}</li>
+						<li class="date_info_display">Last Activity: {{ a.modifiedDate }}</li>
+					</ul>				
 					<div class="answer_edit" >
 						<div id='{{ a.key.id }}'>
 							{{ a.body }}											

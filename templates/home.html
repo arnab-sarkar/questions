@@ -11,7 +11,11 @@
 							{% for tag in q.tags %}
 								<li class="each_tag_display"><a style="text-decoration:none" href='/tag?tag={{ tag }}'>{{ tag }}</a></li>
 							{% endfor %}
-						</ul>						
+						</ul>
+						<ul class="each_tag row">
+							<li class="date_info_display">Created on: {{ q.createdDate }}</li>
+							<li class="date_info_display">Last Activity: {{ q.modifiedDate }}</li>
+						</ul>				
 						<div class="each_question"><a class="question_link" href="/viewQuestion?q={{q.key.id}}">{{ q.title }}</a>						
 						{% if user %}
 							<span class="display_userId"> - {{ q.userId }}</span>
@@ -38,6 +42,6 @@
 					</div>
 				{% endfor %}
 			</ul>
-		</div>
+		</div>		
 	</div>
 {% endblock %}

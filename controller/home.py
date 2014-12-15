@@ -44,6 +44,7 @@ class DisplaySameTagQuestion(webapp2.RequestHandler):
             template_values['userLogout'] = users.create_logout_url('/')
         else:
             template_values['userLogin'] = users.create_login_url('/')
+        questionList.sort(key = lambda x: x.modifiedDate, reverse=True)
         template_values['question']=questionList
         path = template_path('home.html')
         self.response.out.write(template.render(path, template_values))
