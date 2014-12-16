@@ -4,7 +4,7 @@ class Post(ndb.Model):
 	userId = ndb.UserProperty()
 	createdDate = ndb.DateTimeProperty( auto_now_add = True )
 	modifiedDate = ndb.DateTimeProperty( auto_now = True )
-	title = ndb.StringProperty()
+	title = ndb.TextProperty()
 	body = ndb.TextProperty()
 	tags = ndb.StringProperty( repeated = True )
 	parentId = ndb.KeyProperty()

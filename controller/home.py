@@ -24,8 +24,20 @@ class MainPage(webapp2.RequestHandler):
             template_values['userLogin'] = users.create_login_url('/')
         path = template_path('home.html')
         time.sleep(0.1)
-        question = Post.query(Post.parentId==None).order(-Post.modifiedDate).fetch()
-        template_values['question'] = question
+        question = Post.query(Post.parentId==None).order(-Post.modifiedDate).fetch()   
+        displayQuestions = []        
+        for q in question:
+            title = q.title
+            if len(title) > 500:
+                q.title = title[0:499] + "..."
+                displayQuestions.append((q, False))
+            else:
+                body = q.body
+                remaining_len = 500 - len(title)
+                if body != None and len(body) > remaining_len:
+                    q.body = body[0:remaining_len-1] + "..."
+                displayQuestions.append((q, True))
+        template_values['question'] = displayQuestions
         self.response.out.write(template.render(path, template_values))
 
 class DisplaySameTagQuestion(webapp2.RequestHandler):
@@ -45,7 +57,19 @@ class DisplaySameTagQuestion(webapp2.RequestHandler):
         else:
             template_values['userLogin'] = users.create_login_url('/')
         questionList.sort(key = lambda x: x.modifiedDate, reverse=True)
-        template_values['question']=questionList
+        displayQuestions = []        
+        for q in questionList:
+            title = q.title
+            if len(title) > 500:
+                q.title = title[0:499] + "..."
+                displayQuestions.append((q, False))
+            else:
+                body = q.body
+                remaining_len = 500 - len(title)
+                if body != None and len(body) > remaining_len:
+                    q.body = body[0:remaining_len-1] + "..."
+                displayQuestions.append((q, True))
+        template_values['question'] = displayQuestions
         path = template_path('home.html')
         self.response.out.write(template.render(path, template_values))
 
@@ -136,6 +160,16 @@ class AddAnswer(webapp2.RequestHandler):
         post.put()
         question.put()
         time.sleep(0.2)
+        self.redirect('/viewQuestion?q='+qId)
+
+class PostDescription(webapp2.RequestHandler):
+    def post(self):
+        q_description = self.request.get("q_description")        
+        qId = self.request.get("q")
+        question = Post.get_by_id(int(qId))
+        question.body = q_description
+        question.put()
+        time.sleep(0.1)
         self.redirect('/viewQuestion?q='+qId)
 
 class VotePost(webapp2.RequestHandler):

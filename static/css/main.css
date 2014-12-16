@@ -289,7 +289,7 @@ hr.style-three {
   float: left;
   margin-right: 9px;
   font-size: 13px;
-  margin: 0 0 -16px 0;
+  margin: 0 0 -16px -8px;
   bottom: 0;
   clear: left;
   /*position: relative;*/
@@ -412,6 +412,12 @@ hr.style-three {
   background-image: -o-linear-gradient(top, #1C33C9, #0e25b8);
   background-image: linear-gradient(to bottom, #1C33C9, #0e25b8);
   text-decoration: none;
+}
+
+.question_description {
+  font-weight: lighter;
+  font-size: 14px;
+  color: #666;
 }
 
 .col {

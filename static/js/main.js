@@ -169,10 +169,33 @@ function editAnswer(aId) {
 	originalId = aId;
 	var answer = originalTag.replace(/<span class="display_userId".*>/g, "").trim();
 	document.getElementById(aId).innerHTML = "<textarea id='edit_this_answer' class='donot_display_edit' style='height:100px;width:100%'>"+
-											answer+"</textarea><div> <input class='btn' type='button' value='Update Answer' onclick='postEditAnswer("+aId+")' />"+
+											answer+"</textarea><div> <input class='btn' type='button' value='Update Answer' onclick='postEditAnswer("+aId+")' /> "+
 											"<input id='cancel_btn' class='btn' type='button' value='Cancel' /></div>";
 	document.getElementById('cancel_btn').onclick=function(){document.getElementById(aId).innerHTML = originalTag;};
 	document.getElementById('edit_this_answer').focus();		
+}
+
+function addQuestionDescription(qId,isEdit) {
+	var prev_option = document.getElementById('question_description_to_edit').innerHTML;	
+	var newInnerHTML = "<textarea id='add_description' class='donot_display_edit' style='height:100px;width:100%'>"	
+	if (isEdit == 'true') {
+		newInnerHTML += prev_option.trim() + "</textarea><div> <input class='btn' type='button' value='Update Description' onclick='postDescription("+qId+")' /> "
+	} else {
+		newInnerHTML += "</textarea><div> <input class='btn' type='button' value='Add Description' onclick='postDescription("+qId+")' /> "
+	}
+	newInnerHTML += "<input id='cancel_btn_description' class='btn' type='button' value='Cancel' /></div>";	
+	document.getElementById('question_description_to_edit').innerHTML = newInnerHTML					
+	document.getElementById('cancel_btn_description').onclick=function(){document.getElementById('question_description_to_edit').innerHTML = prev_option;};
+	document.getElementById('add_description').focus();
+}
+
+function postDescription(qId) {
+	var q_description = document.getElementById('add_description').value; 	
+	var data = {
+			q:qId,
+			q_description:q_description,		
+		}
+	post('/postDescription',data)
 }
 
 function postEditAnswer(aId) {

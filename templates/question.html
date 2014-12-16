@@ -18,10 +18,18 @@
 				<li class="date_info_display">Created on: {{ question.createdDate }}</li>
 				<li class="date_info_display">Last Activity: {{ question.modifiedDate }}</li>
 			</ul>
-			<div id="question_to_edit">{{ question.title }}</div>
+			<div style="word-break:break-word;" id="question_to_edit">{{ question.title }}</div>			
 			<div id="qId" style="display:none">{{ question.key.id }}</div>
 			{% if question.userId == user %}
 				<span class="display_userId"><a style="text-decoration:none;" href="#" onclick="editQuestion('{{ userLogin }}')"> - Edit </a></span>
+				<div style="word-break:break-word;" class = "question_description" id="question_description_to_edit">
+					{% if question.body != None %}
+						{{ question.body }}
+						</div>
+						<div class="display_userId"><a style="text-decoration:none;" href="#" onclick="addQuestionDescription('{{ question.key.id }}','true')"> - Edit </a></div>
+					{% else %}
+						<span class="display_userId"><a style="text-decoration:none;" href="#" onclick="addQuestionDescription('{{ question.key.id }}','false')"> - Add Description </a></span>
+					{% endif %}
 			{% endif %}
 		</div>
 		{% if user %}
@@ -55,7 +63,7 @@
 						<li class="date_info_display">Last Activity: {{ a.modifiedDate }}</li>
 					</ul>				
 					<div class="answer_edit" >
-						<div id='{{ a.key.id }}'>
+						<div style="word-break:break-word;" id='{{ a.key.id }}'>
 							{{ a.body }}											
 							{% if a.userId == user %}
 								<span class="display_userId"><a style="text-decoration:none;" href="#" onclick="editAnswer('{{ a.key.id }}')"> - Edit </a></span>
