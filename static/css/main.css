@@ -414,7 +414,7 @@ hr.style-three {
   text-decoration: none;
 }
 
-.question_description ul{
+.question_description {
   font-weight: lighter;
   font-size: 14px;
   color: #666;
