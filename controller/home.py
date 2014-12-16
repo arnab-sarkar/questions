@@ -1,7 +1,6 @@
 import webapp2
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
-#from google.appengine.datastore.datastore_query import Cursor
 from model.model import Post
 from model.model import Tags
 from model.model import Vote
@@ -16,23 +15,14 @@ def template_path(template):
 class MainPage(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        #pageNum = self.request.get("pageNum")
-        #curs = None
-        #if pageNum == "" :
-        #    pageNum = 1
-        #else :
-        #    curs = Cursor(self.request.get('cursor'))  
         template_values = {}      
         if user:
             template_values['user'] = user
             template_values['userLogout'] = users.create_logout_url('/') 
         else:
             template_values['userLogin'] = users.create_login_url('/')
-        path = template_path('home.html')        
-        #question, next_curs, more = Post.query(Post.parentId==None).order(-Post.modifiedDate).fetch_page(10, start_cursor=curs)
+        path = template_path('home.html')                
         question = Post.query(Post.parentId==None).order(-Post.modifiedDate).fetch()
-        #template_values['cursor'] = next_curs
-        #template_values['more'] = more
         displayQuestions = []   
         for q in question:
             title = q.title
@@ -45,12 +35,10 @@ class MainPage(webapp2.RequestHandler):
                 if body != None and len(body) > remaining_len:
                     q.body = body[0:remaining_len-1] + "..."
                 displayQuestions.append((q, True))
-            #q.title = re.sub("(https?[^ ]*.jpg)", r"<div class='image'><img src='\1' /></div>", q.title, flags=re.DOTALL)            
         template_values['question'] = displayQuestions
         time.sleep(0.1)
         template_render = template.render(path, template_values)
         template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)
-        #print template.render(path, template_values)
         self.response.out.write(template_render)
 
 class DisplaySameTagQuestion(webapp2.RequestHandler):

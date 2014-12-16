@@ -26,10 +26,10 @@
 					{% if question.body != None %}
 						{{ question.body }}
 						</div>
-						<div class="display_userId"><a style="text-decoration:none;" href="#" onclick="addQuestionDescription('{{ question.key.id }}','true')"> - Edit </a></div>
+						<div class="display_userId"><a style="text-decoration:none;" href="#" onclick="addOrEditQuestionDescription('{{ question.key.id }}','true')"> - Edit </a></div>
 					{% else %}
 						</div>
-						<span class="display_userId"><a style="text-decoration:none;" href="#" onclick="addQuestionDescription('{{ question.key.id }}','false')"> - Add Description </a></span>
+						<span class="display_userId"><a style="text-decoration:none;" href="#" onclick="addOrEditQuestionDescription('{{ question.key.id }}','false')"> - Add Description </a></span>
 					{% endif %}
 			{% endif %}
 		</div>

@@ -106,6 +106,7 @@ function postAnswer(qId) {
 
 function editQuestion(loginUrl) {
 	var question = document.getElementById('question_to_edit').innerHTML;
+	question = question.replace(/<div><img src="([^ ]*)" class="image_display_bigger"><\/div>/g, "$1");	
 	document.getElementById('question').value = question;
 	var tags = document.getElementById('all_existing_tags').innerHTML;
 	tags = tags.trim();
@@ -168,6 +169,7 @@ function editAnswer(aId) {
 	originalTag = document.getElementById(aId).innerHTML;
 	originalId = aId;
 	var answer = originalTag.replace(/<span class="display_userId".*>/g, "").trim();
+	answer = answer.replace(/<div><img src="([^ ]*)" class="image_display_bigger"><\/div>/g, "$1");
 	document.getElementById(aId).innerHTML = "<textarea id='edit_this_answer' class='donot_display_edit' style='height:100px;width:100%'>"+
 											answer+"</textarea><div> <input class='btn' type='button' value='Update Answer' onclick='postEditAnswer("+aId+")' /> "+
 											"<input id='cancel_btn' class='btn' type='button' value='Cancel' /></div>";
@@ -175,11 +177,13 @@ function editAnswer(aId) {
 	document.getElementById('edit_this_answer').focus();		
 }
 
-function addQuestionDescription(qId,isEdit) {
+function addOrEditQuestionDescription(qId,isEdit) {
 	var prev_option = document.getElementById('question_description_to_edit').innerHTML;	
 	var newInnerHTML = "<textarea id='add_description' class='donot_display_edit' style='height:100px;width:100%'>"	
 	if (isEdit == 'true') {
-		newInnerHTML += prev_option.trim() + "</textarea><div> <input class='btn' type='button' value='Update Description' onclick='postDescription("+qId+")' /> "
+		var editText = prev_option.trim();
+		editText = editText.replace(/<div><img src="([^ ]*)" class="image_display_bigger"><\/div>/g, "$1");
+		newInnerHTML += editText + "</textarea><div> <input class='btn' type='button' value='Update Description' onclick='postDescription("+qId+")' /> "
 	} else {
 		newInnerHTML += "</textarea><div> <input class='btn' type='button' value='Add Description' onclick='postDescription("+qId+")' /> "
 	}
@@ -208,24 +212,6 @@ function postEditAnswer(aId) {
 		} 
 	post('/updateAnswer',data);
 }
-
-/*function paging(dir,pageNum,cursor) {
-	var url = document.URL;
-	if (dir === 'prev') {
-		pageNum--;
-	} else {
-		pageNum++;			
-	}
-	if (url.indexOf("p=.*") > -1) {
-		url = url.replace (/p=.*/
-			/*g, "p="+pageNum);
-	} else if (url.indexOf("?") > -1){
-		url += "&p="+pageNum;
-	} else {
-		url += "?p="+pageNum;
-	}
-	alert(url);
-}*/
 
 new List('displayQuestion', {
   valueNames: ['name', 'category'],
