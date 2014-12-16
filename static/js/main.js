@@ -209,6 +209,24 @@ function postEditAnswer(aId) {
 	post('/updateAnswer',data);
 }
 
+/*function paging(dir,pageNum,cursor) {
+	var url = document.URL;
+	if (dir === 'prev') {
+		pageNum--;
+	} else {
+		pageNum++;			
+	}
+	if (url.indexOf("p=.*") > -1) {
+		url = url.replace (/p=.*/
+			/*g, "p="+pageNum);
+	} else if (url.indexOf("?") > -1){
+		url += "&p="+pageNum;
+	} else {
+		url += "?p="+pageNum;
+	}
+	alert(url);
+}*/
+
 new List('displayQuestion', {
   valueNames: ['name', 'category'],
   page: 10,

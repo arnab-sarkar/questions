@@ -76,6 +76,7 @@ body {
   border-radius: 12px;
   padding: 4px 8px;
   border: 0;
+  text-decoration:none;
 }
 
 .each_tag_display, a:visited, a:link {
@@ -84,9 +85,6 @@ body {
 
 .each_tag_display:hover {
   background-color: #bbb;
-}
-
-.each_tag_display:hover a {
   color: #111;
 }
 
@@ -285,6 +283,10 @@ hr.style-three {
   color: #000;
 }
 
+.question_link:link {
+  color: #000;
+}
+
 .upVote {
   float: left;
   margin-right: 9px;
@@ -425,6 +427,20 @@ hr.style-three {
   padding: 5px 10px 5px 10px;
 }
 
+.image_display {
+  max-width: 100px;
+}
+
+/*
+a.page {
+  color: #fff;
+}
+
+.pages {
+  padding: 15px 0 30px;
+  margin-left: 35px;
+}
+*/
 .col {
   float: left;
 }

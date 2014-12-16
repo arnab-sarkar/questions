@@ -9,14 +9,14 @@
 					<div class="display_question">
 						<ul class="each_tag row">
 							{% for tag in q.tags %}
-								<li class="each_tag_display"><a style="text-decoration:none" href='/tag?tag={{ tag }}'>{{ tag }}</a></li>
+								<li><a class="each_tag_display" href='/tag?tag={{ tag }}'>{{ tag }}</a></li>
 							{% endfor %}
 						</ul>
 						<ul class="each_tag row">
 							<li class="date_info_display">Created on: {{ q.createdDate }}</li>
 							<li class="date_info_display">Last Activity: {{ q.modifiedDate }}</li>
 						</ul>
-						<div class="each_question"><a style="word-break:break-word;" class="question_link" href="/viewQuestion?q={{ q.key.id }}">{{ q.title }}</a>				
+						<div class="each_question"><a style="word-break:break-word;" class="question_link" href="/viewQuestion?q={{ q.key.id }}">{{ q.title }}</a>							
 						{% if user %}
 							<span class="display_userId"> - {{ q.userId }}</span>
 						{% endif %}
@@ -45,7 +45,15 @@
 					</div>
 				{% endfor %}
 			</ul>
-			<ul class="pagination"></ul>
+			<ul class="pagination"></ul>			
+			<!--div class="question_display pages row">
+				<div class="col"><input type="button" class="btn" value="Prev" onclick="paging('prev',{{ pageNum }},{{ cursor }})"></a></div>				
+				{% if more %}
+					<div class="col-right"><input type="button" class="btn" value="Next" onclick="paging('next',{{ pageNum }},{{ cursor }})"></a></div>
+				{% else %}
+					<div class="col-right"><input type="button" class="btn" value="Next" disabled="true"></a></div>
+				{% endif %}
+			</div-->
 		</div>		
 	</div>
 {% endblock %}
