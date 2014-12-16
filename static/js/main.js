@@ -209,3 +209,10 @@ function postEditAnswer(aId) {
 	post('/updateAnswer',data);
 }
 
+new List('displayQuestion', {
+  valueNames: ['name', 'category'],
+  page: 10,
+  plugins: [ ListPagination({
+  	outerWindow: 1
+  }) ] 
+});

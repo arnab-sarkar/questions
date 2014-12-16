@@ -1,89 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Question</title>
-	<link rel="stylesheet" href="/css/main.css">
-</head>
-<body>
-	<div id="header">
-		<div class="wrapper row">
-			<div class="col"><a href="/"><h2 id="logo">Home</h2></a></div>
-			<ul id="navlist" class="col-right">             
-				<li><a id="addQuestBtn" href="#" onclick="addQuestion('{{ userLogin }}')">Add Question</a></li>
-				{% if user %}
-					<li><a href="#" class="small-strong">{{ user.nickname }}</a></li>
-					<!--li><a href="#">Profile</a></li-->
-					<li><a href="{{ userLogout }}" onclick="return logoutConfirmation()">Logout</a></li>
-				{% else %}
-					<li><a href="{{ userLogin }}">Login</a></li>
-				{% endif %}
-			</ul>
-		</div>		
-	</div>	
-
-	<div class="wrapper">
-		{% block content %}{% endblock %}
-	</div>
-
-	<div id="addQuestion" style="display:none">
-		<div class="overlay">
-			<div class="modal">
-				<a href="#" onclick="closeAddQuestion()"><img src="/img/close.jpg" align="right"></a>
-				<h2><span id="operation_title_q"></span> Question</h2>
-				<textarea style="height:100px;width:100%" id="question" name="question"></textarea><br/><br/>
-				<input class="btn" type="button" value="Next" onclick="addTags()" />		
-			</div>
-		</div>	
-	</div>
-
-	<div id="addTags" style="display:none">
-		<div class="overlay">
-			<div class="modal">
-				<a href="#" onclick="closeAddTags()"><img src="/img/close.jpg" align="right"></a>
-				<h2><span id="operation_title_t"></span> Tags</h2>
-				<div style="word-break:break-all;" id="question_entered"></div>
-				<hr/>
-				<ul class = "tags_display">
-					<div id="tags_entered"></div>
+	<head>
+		<meta charset="UTF-8">
+		<title>Question</title>
+		<link rel="stylesheet" href="/css/main.css">
+	</head>
+	<body>
+		<div id="header">
+			<div class="wrapper row">
+				<div class="col"><a href="/"><h2 id="logo">Home</h2></a></div>
+				<ul id="navlist" class="col-right">             
+					<li><a id="addQuestBtn" href="#" onclick="addQuestion('{{ userLogin }}')">Add Question</a></li>
+					{% if user %}
+						<li><a href="#" class="small-strong">{{ user.nickname }}</a></li>
+						<!--li><a href="#">Profile</a></li-->
+						<li><a href="{{ userLogout }}" onclick="return logoutConfirmation()">Logout</a></li>
+					{% else %}
+						<li><a href="{{ userLogin }}">Login</a></li>
+					{% endif %}
 				</ul>
-				<textarea style="height:100px;width:100%" id="tags" name="tags" onfocus="this.value=''">Enter comma seperated list of tags</textarea><br/><br/>
-				<input class="btn" type="button" value="Add Tags" onclick="addTag()" />
-				<input class="btn" type="button" value="Back" onclick="goBack()" />
-				<input class="btn" type="button" id="add_question_button"/>				
-			</div>
+			</div>		
 		</div>	
-	</div>
 
-	<!--script type="text/javascript" src="/js/tinymce/js/tinymce/tinymce.min.js"></script-->
-	<script type="text/javascript" src="/js/main.js"></script>
-	<script src="/js/jquery.min.js"></script>  
-	<script src="/js/list.js"></script>
-	<script src="/js/list.pagination.js"></script>
-	<!--script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script-->
-	<!--script>tinymce.init({selector:'textareaanswer',
-		plugins: ["image"],
-		toolbar: "link image"
-		});
-	</script-->	
+		<div class="wrapper">
+			{% block content %}{% endblock %}
+		</div>
 
-	<!--script type="text/javascript">
-		tinymce.init({
-	    selector: "textareaanswer",
-	    plugins: [
-	        "advlist autolink lists link image charmap print preview anchor",
-	        "searchreplace visualblocks code fullscreen",
-	        "insertdatetime media table contextmenu paste moxiemanager"
-	    ],
-	    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-		});
-	</script-->	
-<script type="text/javascript">
-	new List('displayQuestion', {
-  valueNames: ['name'],
-  page: 10,
-  plugins: [ ListPagination({}) ] 
-});
-	</script>
-</body>
+		<div id="addQuestion" style="display:none">
+			<div class="overlay">
+				<div class="modal">
+					<a href="#" onclick="closeAddQuestion()"><img src="/img/close.jpg" align="right"></a>
+					<h2><span id="operation_title_q"></span> Question</h2>
+					<textarea style="height:100px;width:100%" id="question" name="question"></textarea><br/><br/>
+					<input class="btn" type="button" value="Next" onclick="addTags()" />		
+				</div>
+			</div>	
+		</div>
+
+		<div id="addTags" style="display:none">
+			<div class="overlay">
+				<div class="modal">
+					<a href="#" onclick="closeAddTags()"><img src="/img/close.jpg" align="right"></a>
+					<h2><span id="operation_title_t"></span> Tags</h2>
+					<div style="word-break:break-all;" id="question_entered"></div>
+					<hr/>
+					<ul class = "tags_display">
+						<div id="tags_entered"></div>
+					</ul>
+					<textarea style="height:100px;width:100%" id="tags" name="tags" onfocus="this.value=''">Enter comma seperated list of tags</textarea><br/><br/>
+					<input class="btn" type="button" value="Add Tags" onclick="addTag()" />
+					<input class="btn" type="button" value="Back" onclick="goBack()" />
+					<input class="btn" type="button" id="add_question_button"/>				
+				</div>
+			</div>	
+		</div>
+
+		<!--script type="text/javascript" src="/js/tinymce/js/tinymce/tinymce.min.js"></script-->	
+		<script src="/js/jquery.min.js"></script>  
+		<script src="/js/list.js"></script>
+		<script src="/js/list.pagination.js"></script>
+		<script type="text/javascript" src="/js/main.js"></script>
+		<!--script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script-->
+		<!--script>tinymce.init({selector:'textareaanswer',
+			plugins: ["image"],
+			toolbar: "link image"
+			});
+		</script-->	
+
+		<!--script type="text/javascript">
+			tinymce.init({
+		    selector: "textareaanswer",
+		    plugins: [
+		        "advlist autolink lists link image charmap print preview anchor",
+		        "searchreplace visualblocks code fullscreen",
+		        "insertdatetime media table contextmenu paste moxiemanager"
+		    ],
+		    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+			});
+		</script-->	
+	</body>
 </html>
