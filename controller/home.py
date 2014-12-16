@@ -49,7 +49,7 @@ class MainPage(webapp2.RequestHandler):
         template_values['question'] = displayQuestions
         time.sleep(0.1)
         template_render = template.render(path, template_values)
-        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div class='image_display'><img src='\1' heigth=100px width=100% /></div>", template_render, flags=re.DOTALL) 
+        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)
         #print template.render(path, template_values)
         self.response.out.write(template_render)
 
@@ -87,7 +87,9 @@ class DisplaySameTagQuestion(webapp2.RequestHandler):
                 displayQuestions.append((q, True))
         template_values['question'] = displayQuestions
         path = template_path('home.html')
-        self.response.out.write(template.render(path, template_values))
+        template_render = template.render(path, template_values)
+        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)
+        self.response.out.write(template_render)
 
 class AddQuestion(webapp2.RequestHandler):
     def post(self):
@@ -160,8 +162,10 @@ class ViewQuestion(webapp2.RequestHandler):
             template_values['userLogout'] = users.create_logout_url('/')
         else:
             template_values['userLogin'] = users.create_login_url('/')
-        path = template_path('question.html')        
-        self.response.out.write(template.render(path, template_values))
+        path = template_path('question.html')
+        template_render = template.render(path, template_values)
+        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display_bigger' /></div>", template_render, flags=re.DOTALL)
+        self.response.out.write(template_render)
 
 class AddAnswer(webapp2.RequestHandler):
     def post(self):

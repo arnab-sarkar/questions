@@ -428,7 +428,11 @@ hr.style-three {
 }
 
 .image_display {
-  max-width: 100px;
+  height: 150px;
+}
+
+.image_display_bigger {
+  max-width:100%;
 }
 
 /*
