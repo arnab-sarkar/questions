@@ -57,6 +57,9 @@
 
 	<!--script type="text/javascript" src="/js/tinymce/js/tinymce/tinymce.min.js"></script-->
 	<script type="text/javascript" src="/js/main.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>  
+	<script src="/js/list.js"></script>
+	<script src="/js/list.pagination.js"></script>
 	<!--script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script-->
 	<!--script>tinymce.init({selector:'textareaanswer',
 		plugins: ["image"],
@@ -75,5 +78,12 @@
 	    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
 		});
 	</script-->	
+<script type="text/javascript">
+	var monkeyList = new List('displayQuestion', {
+  valueNames: ['name'],
+  page: 10,
+  plugins: [ ListPagination({}) ] 
+});
+	</script>
 </body>
 </html>

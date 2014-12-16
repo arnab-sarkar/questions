@@ -414,10 +414,15 @@ hr.style-three {
   text-decoration: none;
 }
 
-.question_description {
+.question_description ul{
   font-weight: lighter;
   font-size: 14px;
   color: #666;
+}
+
+.pagination li {
+  display: inline-block;
+  padding: 5px 10px 5px 10px;
 }
 
 .col {
