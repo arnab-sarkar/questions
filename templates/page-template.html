@@ -13,6 +13,7 @@
 					<li><a id="addQuestBtn" href="#" onclick="addQuestion('{{ userLogin }}')">Add Question</a></li>
 					{% if user %}
 						<li><a href="#" class="small-strong">{{ user.nickname }}</a></li>
+						<li><a href="#" class="small-strong" onclick="uploadImage()">Upload Image</a></li>
 						<!--li><a href="#">Profile</a></li-->
 						<li><a href="{{ userLogout }}" onclick="return logoutConfirmation()">Logout</a></li>
 					{% else %}
@@ -32,7 +33,7 @@
 					<a href="#" onclick="closeAddQuestion()"><img src="/img/close.jpg" align="right"></a>
 					<h2><span id="operation_title_q"></span> Question</h2>
 					<textarea style="height:100px;width:100%" id="question" name="question"></textarea><br/><br/>
-					<input class="btn" type="button" value="Next" onclick="addTags()" />		
+					<input class="btn" type="button" value="Next" onclick="addTags()" />					
 				</div>
 			</div>	
 		</div>
@@ -51,6 +52,19 @@
 					<input class="btn" type="button" value="Add Tags" onclick="addTag()" />
 					<input class="btn" type="button" value="Back" onclick="goBack()" />
 					<input class="btn" type="button" id="add_question_button"/>				
+				</div>
+			</div>	
+		</div>
+
+		<div id="uploadImage" style="display:none">
+			<div class="overlay">
+				<div class="modal">
+					<a href="#" onclick="closeUploadImage()"><img src="/img/close.jpg" align="right"></a>
+					<h2>Upload Image</h2>
+					<form action="{{ upload_url }}" method="POST" enctype="multipart/form-data">
+						<div><input id="file" class="upload_image_input" type="file" name="file" accept='image/*'></div>
+						<div><input class="btn" type="submit" id="add_question_button" value="Upload" /></div>
+					</form>
 				</div>
 			</div>	
 		</div>

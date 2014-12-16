@@ -4,9 +4,13 @@ from google.appengine.ext.webapp import template
 from model.model import Post
 from model.model import Tags
 from model.model import Vote
+from model.model import View
 import time
 import os
 import re
+import urllib
+from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import blobstore_handlers
 
 def template_path(template):
     path = os.path.join(os.path.dirname(__file__), '../templates/' + template)
@@ -20,8 +24,7 @@ class MainPage(webapp2.RequestHandler):
             template_values['user'] = user
             template_values['userLogout'] = users.create_logout_url('/') 
         else:
-            template_values['userLogin'] = users.create_login_url('/')
-        path = template_path('home.html')                
+            template_values['userLogin'] = users.create_login_url('/')                    
         question = Post.query(Post.parentId==None).order(-Post.modifiedDate).fetch()
         displayQuestions = []   
         for q in question:
@@ -36,9 +39,12 @@ class MainPage(webapp2.RequestHandler):
                     q.body = body[0:remaining_len-1] + "..."
                 displayQuestions.append((q, True))
         template_values['question'] = displayQuestions
+        upload_url = blobstore.create_upload_url('/upload')
+        template_values['upload_url'] = upload_url
         time.sleep(0.1)
+        path = template_path('home.html')  
         template_render = template.render(path, template_values)
-        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)
+        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)        
         self.response.out.write(template_render)
 
 class DisplaySameTagQuestion(webapp2.RequestHandler):
@@ -140,6 +146,7 @@ class ViewQuestion(webapp2.RequestHandler):
         qId = self.request.get("q")
         user = users.get_current_user()
         question = Post.get_by_id(int(qId))
+        view = View.get_by_id(int(qId))
         answers = Post.query(Post.parentId==question.key).order(-Post.voteCount).fetch()
         template_values = {
             'question': question,
@@ -230,3 +237,15 @@ class UpdateAnswer(webapp2.RequestHandler):
             question_db.put()
         time.sleep(0.2)
         self.redirect(str(url))
+
+class UploadImage(blobstore_handlers.BlobstoreUploadHandler):
+    def post(self):
+        upload_files = self.get_uploads('file')
+        blob_info = upload_files[0]
+        self.redirect('/serveImage/%s' % blob_info.key())
+
+class ImageServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
+    def get(self, resource):
+        resource = str(urllib.unquote(resource))
+        blob_info = blobstore.BlobInfo.get(resource)        
+        self.send_blob(blob_info)

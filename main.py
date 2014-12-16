@@ -8,15 +8,19 @@ from controller.home import UpdateAnswer
 from controller.home import AddAnswer
 from controller.home import VotePost
 from controller.home import PostDescription
+from controller.home import UploadImage
+from controller.home import ImageServeHandler
 
 app = webapp2.WSGIApplication([
     ('/addAnswer',AddAnswer),
     ('/updateQuestion',UpdateQuestion),
     ('/postDescription',PostDescription),
     ('/updateAnswer',UpdateAnswer),
+    ('/upload',UploadImage),
     ('/viewQuestion',ViewQuestion),
     ('/vote',VotePost),
     ('/tag',DisplaySameTagQuestion),
     ('/question',AddQuestion),
+    ('/serveImage/([^/]+)?', ImageServeHandler),
     ('/', MainPage),
 ], debug=True)

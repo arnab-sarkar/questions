@@ -213,6 +213,21 @@ function postEditAnswer(aId) {
 	post('/updateAnswer',data);
 }
 
+function uploadImage() {
+	document.getElementById('uploadImage').style.display = 'block';
+}
+
+function closeUploadImage() {
+	document.getElementById('uploadImage').style.display = 'none';	
+}
+
+/*
+function postUploadImage(upload_url) {
+	var image = getElementById('file').value;
+	alert(image);	
+	post(upload_url,{file:image});
+}*/
+
 new List('displayQuestion', {
   valueNames: ['name', 'category'],
   page: 10,

@@ -24,6 +24,21 @@ indexes:
 - kind: Post
   properties:
   - name: parentId
+  - name: modifiedDate
+    direction: desc
+  - name: voteCount
+
+- kind: Post
+  properties:
+  - name: parentId
+  - name: modifiedDate
+    direction: desc
+  - name: voteCount
+    direction: desc
+
+- kind: Post
+  properties:
+  - name: parentId
   - name: voteCount
 
 - kind: Post

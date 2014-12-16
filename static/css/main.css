@@ -434,6 +434,11 @@ hr.style-three {
 .image_display_bigger {
   max-width:100%;
 }
+
+.upload_image_input {
+  margin-bottom: 10px;
+}
+
 .col {
   float: left;
 }

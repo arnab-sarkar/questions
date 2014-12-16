@@ -8,7 +8,7 @@ class Post(ndb.Model):
 	body = ndb.TextProperty()
 	tags = ndb.StringProperty( repeated = True )
 	parentId = ndb.KeyProperty()
-	voteCount = ndb.IntegerProperty()
+	voteCount = ndb.IntegerProperty()	
 
 class Vote(ndb.Model):
 	userId = ndb.UserProperty()
@@ -19,3 +19,6 @@ class Tags(ndb.Model):
 	name = ndb.StringProperty()
 	posts = ndb.KeyProperty( repeated = True )
 
+class View(ndb.Model):
+	postId = ndb.KeyProperty()
+	viewerId = ndb.UserProperty( repeated = True )
