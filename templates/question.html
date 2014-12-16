@@ -17,6 +17,7 @@
 			<ul class="each_tag row">
 				<li class="date_info_display">Created on: {{ question.createdDate }}</li>
 				<li class="date_info_display">Last Activity: {{ question.modifiedDate }}</li>
+				<li class="date_info_display">Views: {{ view_count }}</li>
 			</ul>
 			<div style="word-break:break-word;" id="question_to_edit">{{ question.title }}</div>			
 			<div id="qId" style="display:none">{{ question.key.id }}</div>

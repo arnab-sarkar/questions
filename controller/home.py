@@ -25,19 +25,23 @@ class MainPage(webapp2.RequestHandler):
             template_values['userLogout'] = users.create_logout_url('/') 
         else:
             template_values['userLogin'] = users.create_login_url('/')                    
-        question = Post.query(Post.parentId==None).order(-Post.modifiedDate).fetch()
+        question = Post.query(Post.parentId==None).order(-Post.modifiedDate).fetch()        
         displayQuestions = []   
         for q in question:
             title = q.title
+            view = View.query(View.postId==q.key).fetch()
+            view_count = 0
+            if len(view) > 0:
+                view_count = len(view[0].viewerId)
             if len(title) > 500:
                 q.title = title[0:499] + "..."
-                displayQuestions.append((q, False))
+                displayQuestions.append((q, False, view_count))
             else:
                 body = q.body
                 remaining_len = 500 - len(title)
                 if body != None and len(body) > remaining_len:
                     q.body = body[0:remaining_len-1] + "..."
-                displayQuestions.append((q, True))
+                displayQuestions.append((q, True, view_count))
         template_values['question'] = displayQuestions
         upload_url = blobstore.create_upload_url('/upload')
         template_values['upload_url'] = upload_url
@@ -145,18 +149,31 @@ class ViewQuestion(webapp2.RequestHandler):
     def get(self):
         qId = self.request.get("q")
         user = users.get_current_user()
-        question = Post.get_by_id(int(qId))
-        view = View.get_by_id(int(qId))
+        question = Post.get_by_id(int(qId))        
         answers = Post.query(Post.parentId==question.key).order(-Post.voteCount).fetch()
         template_values = {
             'question': question,
             'answers': answers
         }
+        view = View.query(View.postId==question.key).fetch()
+        view_count = 0       
         if user:
             template_values['user'] = user
             template_values['userLogout'] = users.create_logout_url('/')
+            if len(view) == 0:
+                v = View()
+                v.postId = question.key
+                v.viewerId = [user]
+                view_count = 1
+                v.put()
+            else:
+                if not user in view[0].viewerId:
+                    view[0].viewerId.append(user)
+                    view[0].put()
+                view_count = len(view[0].viewerId)
         else:
             template_values['userLogin'] = users.create_login_url('/')
+        template_values['view_count'] = view_count
         path = template_path('question.html')
         template_render = template.render(path, template_values)
         template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display_bigger' /></div>", template_render, flags=re.DOTALL)
@@ -247,5 +264,7 @@ class UploadImage(blobstore_handlers.BlobstoreUploadHandler):
 class ImageServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
     def get(self, resource):
         resource = str(urllib.unquote(resource))
-        blob_info = blobstore.BlobInfo.get(resource)        
+        blob_info = blobstore.BlobInfo.get(resource)
+        print blob_info
+        print "here"
         self.send_blob(blob_info)

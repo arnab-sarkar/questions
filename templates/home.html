@@ -5,7 +5,7 @@
 	<div class="questionWrapper content">
 		<div id="displayQuestion">
 			<ul class="question_display list">
-				{% for q,d in question %}
+				{% for q,d,c in question %}
 					<div class="display_question">
 						<ul class="each_tag row">
 							{% for tag in q.tags %}
@@ -15,6 +15,7 @@
 						<ul class="each_tag row">
 							<li class="date_info_display">Created on: {{ q.createdDate }}</li>
 							<li class="date_info_display">Last Activity: {{ q.modifiedDate }}</li>
+							<li class="date_info_display">Views: {{ c }}</li>
 						</ul>
 						<div class="each_question"><a style="word-break:break-word;" class="question_link" href="/viewQuestion?q={{ q.key.id }}">{{ q.title }}</a>							
 						{% if user %}
