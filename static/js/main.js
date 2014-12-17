@@ -107,6 +107,7 @@ function postAnswer(qId) {
 function editQuestion(loginUrl) {
 	var question = document.getElementById('question_to_edit').innerHTML;
 	question = question.replace(/<div><img src="([^ ]*)" class="image_display_bigger"><\/div>/g, "$1");	
+	question = question.replace(/<a.*>([^ ]*)<\/a>/g, "$1");
 	document.getElementById('question').value = question;
 	var tags = document.getElementById('all_existing_tags').innerHTML;
 	tags = tags.trim();
@@ -169,6 +170,7 @@ function editAnswer(aId) {
 	originalTag = document.getElementById(aId).innerHTML;
 	originalId = aId;
 	var answer = originalTag.replace(/<span class="display_userId".*>/g, "").trim();
+	answer = answer.replace(/<a.*>([^ ]*)<\/a>/g, "$1");
 	answer = answer.replace(/<div><img src="([^ ]*)" class="image_display_bigger"><\/div>/g, "$1");
 	document.getElementById(aId).innerHTML = "<textarea id='edit_this_answer' class='donot_display_edit' style='height:100px;width:100%'>"+
 											answer+"</textarea><div> <input class='btn' type='button' value='Update Answer' onclick='postEditAnswer("+aId+")' /> "+
@@ -183,6 +185,7 @@ function addOrEditQuestionDescription(qId,isEdit) {
 	if (isEdit == 'true') {
 		var editText = prev_option.trim();
 		editText = editText.replace(/<div><img src="([^ ]*)" class="image_display_bigger"><\/div>/g, "$1");
+		editText = editText.replace(/<a.*>([^ ]*)<\/a>/g, "$1");
 		newInnerHTML += editText + "</textarea><div> <input class='btn' type='button' value='Update Description' onclick='postDescription("+qId+")' /> "
 	} else {
 		newInnerHTML += "</textarea><div> <input class='btn' type='button' value='Add Description' onclick='postDescription("+qId+")' /> "

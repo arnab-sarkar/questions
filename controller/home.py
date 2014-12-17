@@ -47,7 +47,7 @@ class MainPage(webapp2.RequestHandler):
         time.sleep(0.1)
         path = template_path('home.html')  
         template_render = template.render(path, template_values)
-        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)
+        template_render = re.sub("(https?[^\s]*\.(?i)((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)
         self.response.out.write(template_render)
 
 class DisplaySameTagQuestion(webapp2.RequestHandler):
@@ -89,7 +89,7 @@ class DisplaySameTagQuestion(webapp2.RequestHandler):
         template_values['question'] = displayQuestions
         path = template_path('home.html')
         template_render = template.render(path, template_values)
-        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)
+        template_render = re.sub("(https?[^\s]*\.(?i)((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)
         self.response.out.write(template_render)
 
 class AddQuestion(webapp2.RequestHandler):
@@ -153,8 +153,12 @@ class ViewQuestion(webapp2.RequestHandler):
         qId = self.request.get("q")
         user = users.get_current_user()
         question = Post.get_by_id(int(qId))
-        question.title = re.sub("(https?[^ ]*.[^((jpg)|(png)|(gif))])", r"<a href='\1'></a>", question.title, flags=re.DOTALL)
+        question.title = re.sub("(https?[^\s]*)", r"__\1", question.title, flags=re.DOTALL)
+        if question.body != None:
+            question.body = re.sub("(https?[^\s]*)", r"__\1", question.body, flags=re.DOTALL)        
         answers = Post.query(Post.parentId==question.key).order(-Post.voteCount).fetch()
+        for a in answers:
+            a.body = re.sub("(https?[^\s]*)", r"__\1", a.body, flags=re.DOTALL)
         template_values = {
             'question': question,
             'answers': answers
@@ -179,8 +183,9 @@ class ViewQuestion(webapp2.RequestHandler):
             view_count = len(view[0].viewerId) - 1
         template_values['view_count'] = view_count
         path = template_path('question.html')
-        template_render = template.render(path, template_values)
-        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display_bigger' /></div>", template_render, flags=re.DOTALL)
+        template_render = template.render(path, template_values)        
+        template_render = re.sub("__(https?[^\s]*\.(?i)((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display_bigger' /></div>", template_render, flags=re.DOTALL)
+        template_render = re.sub("__(https?[^\s]*)", r"<a href='\1' target='_blank'>\1</a>", template_render, flags=re.DOTALL)
         self.response.out.write(template_render)
 
 class AddAnswer(webapp2.RequestHandler):
@@ -297,7 +302,7 @@ class UploadImage(blobstore_handlers.BlobstoreUploadHandler):
         self.redirect('/imagePage')
 
 class ImageServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
-    def get(self, resource):
+    def get(self, resource):    
         resource = str(urllib.unquote(resource))
         blob_info = blobstore.BlobInfo.get(resource)        
         self.send_blob(blob_info)
