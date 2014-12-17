@@ -304,11 +304,11 @@ class Search(webapp2.RequestHandler):
         template_values = {}
         questionList = []
         for p in posts:            
-            if p.title != None and searchString in p.title:
+            if p.title != None and searchString.lower() in p.title.lower():
                 questionList.append(p)
-            elif p.body != None and p.parentId == None and searchString in p.body:
+            elif p.body != None and p.parentId == None and searchString.lower() in p.body.lower():
                 questionList.append(p)
-            elif p.body != None and p.parentId != None and searchString in p.body:
+            elif p.body != None and p.parentId != None and searchString.lower() in p.body.lower():
                 question_db = Post.get_by_id(p.parentId.id())                                
                 questionList.append(question_db)
         template_values['question'] = get_question_formatted(questionList)

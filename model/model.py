@@ -26,3 +26,7 @@ class View(ndb.Model):
 class Image(ndb.Model):
 	userId = ndb.UserProperty()
 	imgBlobId = ndb.StringProperty()
+
+class Follow(ndb.Model):	
+	viewerId = ndb.UserProperty()
+	postId = ndb.KeyProperty( repeated = True )

@@ -28,9 +28,6 @@ function closeAddTags() {
 }
 
 function addTags () {
-	if (document.getElementById('question').value == "Enter Question") {
-		document.getElementById('question').value = "";
-	}
 	var q = document.getElementById('question').value;
 	document.getElementById('addQuestion').style.display = 'none';
 	document.getElementById('addTags').style.display = 'block';
@@ -38,9 +35,6 @@ function addTags () {
 }
 
 function goBack() {	
-	if (document.getElementById('question').value == "") {
-		document.getElementById('question').value = "Enter Question";
-	}
 	document.getElementById('addTags').style.display = 'none';
 	document.getElementById('addQuestion').style.display = 'block';
 }
@@ -51,7 +45,7 @@ function removeTag(tag) {
 
 function clearForm() {
 	document.getElementById('question_entered').innerHTML="";
-	document.getElementById('question').value="Enter Question";
+	document.getElementById('question').value="";
 	document.getElementById('tags_entered').innerHTML ="";
 	document.getElementById('tags').value = "Enter comma seperated Tags";
 }
