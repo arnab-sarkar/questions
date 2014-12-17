@@ -32,7 +32,7 @@
 				<div class="modal">
 					<a href="#" onclick="closeAddQuestion()"><img src="/img/close.jpg" align="right"></a>
 					<h2><span id="operation_title_q"></span> Question</h2>
-					<textarea style="height:100px;width:100%" id="question" name="question"></textarea><br/><br/>
+					<textarea style="height:100px;width:100%" id="question" name="question" onfocus="this.value=''">Enter Question</textarea><br/><br/>
 					<input class="btn" type="button" value="Next" onclick="addTags()" />					
 				</div>
 			</div>	
@@ -48,7 +48,7 @@
 					<ul class = "tags_display">
 						<div id="tags_entered"></div>
 					</ul>
-					<textarea style="height:100px;width:100%" id="tags" name="tags" onfocus="this.value=''">Enter comma seperated list of tags</textarea><br/><br/>
+					<textarea style="height:100px;width:100%" id="tags" name="tags" onfocus="this.value=''">Enter comma seperated Tags</textarea><br/><br/>
 					<input class="btn" type="button" value="Add Tags" onclick="addTag()" />
 					<input class="btn" type="button" value="Back" onclick="goBack()" />
 					<input class="btn" type="button" id="add_question_button"/>				

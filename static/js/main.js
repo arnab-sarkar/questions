@@ -8,7 +8,7 @@ function logoutConfirmation() {
 function addQuestion(loginUrl) {
 	if (loginUrl) {
 		window.location.assign(loginUrl);		
-	} else {
+	} else {			
 		document.getElementById('addQuestion').style.display = 'block';
 		document.getElementById('add_question_button').value = "Add Question";
 		document.getElementById('operation_title_q').innerHTML = "Add";
@@ -28,6 +28,9 @@ function closeAddTags() {
 }
 
 function addTags () {
+	if (document.getElementById('question').value == "Enter Question") {
+		document.getElementById('question').value = "";
+	}
 	var q = document.getElementById('question').value;
 	document.getElementById('addQuestion').style.display = 'none';
 	document.getElementById('addTags').style.display = 'block';
@@ -35,6 +38,9 @@ function addTags () {
 }
 
 function goBack() {	
+	if (document.getElementById('question').value == "") {
+		document.getElementById('question').value = "Enter Question";
+	}
 	document.getElementById('addTags').style.display = 'none';
 	document.getElementById('addQuestion').style.display = 'block';
 }
@@ -45,9 +51,9 @@ function removeTag(tag) {
 
 function clearForm() {
 	document.getElementById('question_entered').innerHTML="";
-	document.getElementById('question').value="";
+	document.getElementById('question').value="Enter Question";
 	document.getElementById('tags_entered').innerHTML ="";
-	document.getElementById('tags').value = "Enter comma seperated list of tags";
+	document.getElementById('tags').value = "Enter comma seperated Tags";
 }
 
 function addTag() {		
@@ -59,7 +65,7 @@ function addTag() {
 		temp = temp.replace(/<li.*>/g, "").replace(/ +/g,"_");				
 		uniqueTags[temp] = true;		
 	}
-	if(document.getElementById('tags').value == "Enter comma seperated list of tags")
+	if(document.getElementById('tags').value == "Enter comma seperated Tags")
 		return;
  	var tag = document.getElementById('tags').value.split(",");
  	var tags = ""
@@ -73,7 +79,7 @@ function addTag() {
  		}  		
  	}
 	document.getElementById('tags_entered').innerHTML += tags;
-	document.getElementById('tags').value = "Enter comma seperated list of tags";
+	document.getElementById('tags').value = "Enter comma seperated Tags";
 }
 
 function post(path, params, method) {
