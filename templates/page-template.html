@@ -9,7 +9,7 @@
 		<div id="header">
 			<div class="wrapper row">
 				<div class="col"><a href="/"><h2 id="logo">Home</h2></a></div>
-				<ul id="navlist" class="col-right">             
+				<ul id="navlist" class="col-right">
 					<li><a id="addQuestBtn" href="#" onclick="addQuestion('{{ userLogin }}')">Add Question</a></li>
 					{% if user %}
 						<li><a href="#" class="small-strong">{{ user.nickname }}</a></li>
@@ -54,20 +54,7 @@
 					<input class="btn" type="button" id="add_question_button"/>				
 				</div>
 			</div>	
-		</div>
-
-		<div id="uploadImage" style="display:none">
-			<div class="overlay">
-				<div class="modal">
-					<a href="#" onclick="closeUploadImage()"><img src="/img/close.jpg" align="right"></a>
-					<h2>Upload Image</h2>
-					<form action="{{ upload_url }}" method="POST" enctype="multipart/form-data">
-						<div><input id="file" class="upload_image_input" type="file" name="file" accept='image/*'></div>
-						<div><input class="btn" type="submit" id="add_question_button" value="Upload" /></div>						
-					</form>
-				</div>
-			</div>	
-		</div>
+		</div>		
 		
 		<script src="/js/jquery.min.js"></script>  
 		<script src="/js/list.js"></script>

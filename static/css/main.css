@@ -374,11 +374,11 @@ hr.style-three {
   font-weight: bold;
   padding-bottom: 8px;
 }
-
+/*
 .display_userId:hover {
   text-decoration: underline;
 }
-
+*/
 .display_tags { 
   position: fixed;
   top: 102px;

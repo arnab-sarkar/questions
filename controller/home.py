@@ -73,6 +73,10 @@ class DisplaySameTagQuestion(webapp2.RequestHandler):
         displayQuestions = []        
         for q in questionList:
             title = q.title
+            view = View.query(View.postId==q.key).fetch()
+            view_count = 0
+            if len(view) > 0:
+                view_count = len(view[0].viewerId) - 1
             if len(title) > 500:
                 q.title = title[0:499] + "..."
                 displayQuestions.append((q, False, view_count))
@@ -81,11 +85,7 @@ class DisplaySameTagQuestion(webapp2.RequestHandler):
                 remaining_len = 500 - len(title)
                 if body != None and len(body) > remaining_len:
                     q.body = body[0:remaining_len-1] + "..."
-                displayQuestions.append((q, True, view_count))
-            view = View.query(View.postId==q.key).fetch()
-            view_count = 0
-            if len(view) > 0:
-                view_count = len(view[0].viewerId) - 1
+                displayQuestions.append((q, True, view_count))            
         template_values['question'] = displayQuestions
         path = template_path('home.html')
         template_render = template.render(path, template_values)
@@ -152,7 +152,8 @@ class ViewQuestion(webapp2.RequestHandler):
     def get(self):
         qId = self.request.get("q")
         user = users.get_current_user()
-        question = Post.get_by_id(int(qId))        
+        question = Post.get_by_id(int(qId))
+        question.title = re.sub("(https?[^ ]*.[^((jpg)|(png)|(gif))])", r"<a href='\1'></a>", question.title, flags=re.DOTALL)
         answers = Post.query(Post.parentId==question.key).order(-Post.voteCount).fetch()
         template_values = {
             'question': question,
@@ -264,15 +265,14 @@ class UploadImagePage(webapp2.RequestHandler):
         images = Image.query(Image.userId==user).fetch()
         img_links = []
         for i in images:
-            img_links.append(i.imgBlobId)
-        print img_links
+            img_links.append(i.imgBlobId)        
         template_values = {
             'images': img_links
         }
         #Dev
-        template_values['image_url'] = "http://localhost:8080/serveImage/"
+        #template_values['image_url'] = "http://localhost:8080/serveImage/"
         #Prod
-        #template_values['image_url'] = "http://question-ost.appspot.com/serveImage/"
+        template_values['image_url'] = "http://question-ost.appspot.com/serveImage/"
         if user:
             template_values['user'] = user
             template_values['userLogout'] = users.create_logout_url('/') 
