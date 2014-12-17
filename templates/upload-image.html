@@ -2,14 +2,14 @@
 
 {% block content %}
 
-	<div class="questionWrapper content">
+	<div class="content" style="padding: 70px 0 0">
 		<div>
 			<input type="button" class="btn" value="Upload Image" onclick="uploadImage()"/>
 		</div>
-		<div>
+		<div class="img-grid row">
 			{% for img in images %}
-			<div class="col">
-				<a href="{{ image_url }}{{ img }}"><img src="{{ image_url }}{{ img }}" class='image_display_smaller' /></a>		
+			<div class="col img-cell">
+				<a href="{{ image_url }}{{ img }}"><img src="{{ image_url }}{{ img }}" /></a>		
 			</div>
 			{% endfor %}
 		</div>

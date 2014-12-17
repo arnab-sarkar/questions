@@ -113,6 +113,7 @@ body {
 #header {
   position: fixed;
   top:0;
+  left:0;
   width:100%;
   background: #fff; 
   z-index: 98;
@@ -429,6 +430,30 @@ hr.style-three {
 
 .image_display {
   height: 150px;
+}
+
+.img-cell, .img-cell img {
+  width: 212px;
+  height: 212px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.img-cell{
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin: 0 4px 4px 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.img-cell:hover {
+  border-color: #666;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+}
+
+.img-cell a, .img-cell img{
+  display: block;
 }
 
 .image_display_bigger {

@@ -47,7 +47,7 @@ class MainPage(webapp2.RequestHandler):
         time.sleep(0.1)
         path = template_path('home.html')  
         template_render = template.render(path, template_values)
-        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)        
+        template_render = re.sub("(https?[^ ]*.((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)
         self.response.out.write(template_render)
 
 class DisplaySameTagQuestion(webapp2.RequestHandler):
@@ -269,7 +269,10 @@ class UploadImagePage(webapp2.RequestHandler):
         template_values = {
             'images': img_links
         }
-        template_values['image_url'] = "http://question-ost.appspot.com/serveImage/"
+        #Dev
+        template_values['image_url'] = "http://localhost:8080/serveImage/"
+        #Prod
+        #template_values['image_url'] = "http://question-ost.appspot.com/serveImage/"
         if user:
             template_values['user'] = user
             template_values['userLogout'] = users.create_logout_url('/') 
