@@ -22,3 +22,7 @@ class Tags(ndb.Model):
 class View(ndb.Model):
 	postId = ndb.KeyProperty()
 	viewerId = ndb.UserProperty( repeated = True )
+
+class Image(ndb.Model):
+	userId = ndb.UserProperty()
+	imgBlobId = ndb.StringProperty()

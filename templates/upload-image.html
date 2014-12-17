@@ -1,0 +1,18 @@
+{% extends "page-template.html" %}
+
+{% block content %}
+
+	<div class="questionWrapper content">
+		<div>
+			<input type="button" class="btn" value="Upload Image" onclick="uploadImage()"/>
+		</div>
+		<div>
+			{% for img in images %}
+			<div class="col">
+				<a href="{{ image_url }}{{ img }}"><img src="{{ image_url }}{{ img }}" class='image_display_smaller' /></a>		
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}

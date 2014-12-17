@@ -13,7 +13,7 @@
 					<li><a id="addQuestBtn" href="#" onclick="addQuestion('{{ userLogin }}')">Add Question</a></li>
 					{% if user %}
 						<li><a href="#" class="small-strong">{{ user.nickname }}</a></li>
-						<li><a href="#" class="small-strong" onclick="uploadImage()">Upload Image</a></li>
+						<li><a href="/imagePage" class="small-strong">Upload Image</a></li>
 						<!--li><a href="#">Profile</a></li-->
 						<li><a href="{{ userLogout }}" onclick="return logoutConfirmation()">Logout</a></li>
 					{% else %}
@@ -63,7 +63,7 @@
 					<h2>Upload Image</h2>
 					<form action="{{ upload_url }}" method="POST" enctype="multipart/form-data">
 						<div><input id="file" class="upload_image_input" type="file" name="file" accept='image/*'></div>
-						<div><input class="btn" type="submit" id="add_question_button" value="Upload" /></div>
+						<div><input class="btn" type="submit" id="add_question_button" value="Upload" /></div>						
 					</form>
 				</div>
 			</div>	
