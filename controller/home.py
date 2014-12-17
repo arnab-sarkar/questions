@@ -17,6 +17,25 @@ def template_path(template):
     path = os.path.join(os.path.dirname(__file__), '../templates/' + template)
     return path
 
+def get_question_formatted(question):
+    displayQuestions = []   
+    for q in question:
+        title = q.title
+        view = View.query(View.postId==q.key).fetch()
+        view_count = 0
+        if len(view) > 0:
+            view_count = len(view[0].viewerId) - 1
+        if len(title) > 500:
+            q.title = title[0:499] + "..."
+            displayQuestions.append((q, False, view_count))
+        else:
+            body = q.body
+            remaining_len = 500 - len(title)
+            if body != None and len(body) > remaining_len:
+                q.body = body[0:remaining_len-1] + "..."
+            displayQuestions.append((q, True, view_count))
+    return displayQuestions
+
 class MainPage(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -27,22 +46,7 @@ class MainPage(webapp2.RequestHandler):
         else:
             template_values['userLogin'] = users.create_login_url('/')                    
         question = Post.query(Post.parentId==None).order(-Post.modifiedDate).fetch()        
-        displayQuestions = []   
-        for q in question:
-            title = q.title
-            view = View.query(View.postId==q.key).fetch()
-            view_count = 0
-            if len(view) > 0:
-                view_count = len(view[0].viewerId) - 1
-            if len(title) > 500:
-                q.title = title[0:499] + "..."
-                displayQuestions.append((q, False, view_count))
-            else:
-                body = q.body
-                remaining_len = 500 - len(title)
-                if body != None and len(body) > remaining_len:
-                    q.body = body[0:remaining_len-1] + "..."
-                displayQuestions.append((q, True, view_count))
+        displayQuestions = get_question_formatted(question)
         template_values['question'] = displayQuestions        
         time.sleep(0.1)
         path = template_path('home.html')  
@@ -70,22 +74,7 @@ class DisplaySameTagQuestion(webapp2.RequestHandler):
         else:
             template_values['userLogin'] = users.create_login_url('/')
         questionList.sort(key = lambda x: x.modifiedDate, reverse=True)
-        displayQuestions = []        
-        for q in questionList:
-            title = q.title
-            view = View.query(View.postId==q.key).fetch()
-            view_count = 0
-            if len(view) > 0:
-                view_count = len(view[0].viewerId) - 1
-            if len(title) > 500:
-                q.title = title[0:499] + "..."
-                displayQuestions.append((q, False, view_count))
-            else:
-                body = q.body
-                remaining_len = 500 - len(title)
-                if body != None and len(body) > remaining_len:
-                    q.body = body[0:remaining_len-1] + "..."
-                displayQuestions.append((q, True, view_count))            
+        displayQuestions = get_question_formatted(questionList)         
         template_values['question'] = displayQuestions
         path = template_path('home.html')
         template_render = template.render(path, template_values)
@@ -306,3 +295,30 @@ class ImageServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
         resource = str(urllib.unquote(resource))
         blob_info = blobstore.BlobInfo.get(resource)        
         self.send_blob(blob_info)
+
+class Search(webapp2.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        searchString = self.request.get("search_text")
+        posts = Post.query().fetch()
+        template_values = {}
+        questionList = []
+        for p in posts:            
+            if p.title != None and searchString in p.title:
+                questionList.append(p)
+            elif p.body != None and p.parentId == None and searchString in p.body:
+                questionList.append(p)
+            elif p.body != None and p.parentId != None and searchString in p.body:
+                question_db = Post.get_by_id(p.parentId.id())                                
+                questionList.append(question_db)
+        template_values['question'] = get_question_formatted(questionList)
+        if user:
+            template_values['user'] = user
+            template_values['userLogout'] = users.create_logout_url('/') 
+        else:
+            template_values['userLogin'] = users.create_login_url('/')
+        path = template_path('home.html')  
+        template_render = template.render(path, template_values)
+        print template_render
+        template_render = re.sub("(https?[^\s]*\.(?i)((jpg)|(png)|(gif)))", r"<div><img src='\1' class='image_display' /></div>", template_render, flags=re.DOTALL)
+        self.response.out.write(template_render)

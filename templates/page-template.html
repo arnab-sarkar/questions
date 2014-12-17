@@ -10,6 +10,12 @@
 			<div class="wrapper row">
 				<div class="col"><a href="/"><h2 id="logo">Home</h2></a></div>
 				<ul id="navlist" class="col-right">
+					<li>
+						<span>
+						<a href="#" onclick="searchPost()"><img src="/img/search.png" class="search_img"></img></a>
+						<input id="search_text" type="text" class="search" placeholder="Search..." required onclick="search()">                    	
+                    	</span>
+                    </li>
 					<li><a id="addQuestBtn" href="#" onclick="addQuestion('{{ userLogin }}')">Add Question</a></li>
 					{% if user %}
 						<li><a href="#" class="small-strong">{{ user.nickname }}</a></li>

@@ -464,6 +464,14 @@ hr.style-three {
   margin-bottom: 10px;
 }
 
+.search {
+  padding: 5px 0 5px;
+}
+
+.search_img {
+  vertical-align: middle;
+}
+
 .col {
   float: left;
 }

@@ -11,6 +11,7 @@ from controller.home import PostDescription
 from controller.home import UploadImage
 from controller.home import UploadImagePage
 from controller.home import ImageServeHandler
+from controller.home import Search
 
 app = webapp2.WSGIApplication([
     ('/addAnswer',AddAnswer),
@@ -24,5 +25,6 @@ app = webapp2.WSGIApplication([
     ('/tag',DisplaySameTagQuestion),
     ('/question',AddQuestion),
     ('/serveImage/([^/]+)?', ImageServeHandler),
+    ('/search',Search),
     ('/', MainPage),
 ], debug=True)

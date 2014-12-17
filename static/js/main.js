@@ -230,13 +230,24 @@ function closeUploadImage() {
 	document.getElementById('uploadImage').style.display = 'none';	
 }
 
+function searchPost() {
+	var search = document.getElementById('search_text').value;
+	post('/search',{search_text:search},'get');
+}
+
 /*
 function postUploadImage(upload_url) {
 	var image = getElementById('file').value;
 	alert(image);	
 	post(upload_url,{file:image});
 }*/
-
+/*
+$("#search_text").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#search_text").click();
+    }
+});
+*/
 new List('displayQuestion', {
   valueNames: ['name', 'category'],
   page: 10,
